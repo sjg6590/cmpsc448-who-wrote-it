@@ -10,15 +10,17 @@ import json
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import Pipeline
+from sklearn.metrics import normalized_mutual_info_score
+from sklearn.naive_bayes import MultinomialNB
 
-from src.config import DATA_DIR, FIG_DIR, MODELS, RESULTS_DIR, SEED, TFIDF_MAX_FEATURES
+from src.config import COUNT_MAX_FEATURES, DATA_DIR, FIG_DIR, MODELS, NB_M, RESULTS_DIR, SEED
 from src.features import feature_summary, feature_table
 from src.models import build_model
 from src.plots import balance_heatmap, confusion, feature_boxes, grouped_bars, training_curves
-from src.textutil import ABLATIONS
+from src.textutil import ABLATIONS, tokenize
 from src.train import (
     TextSplit,
     build_vocab,
@@ -86,43 +88,86 @@ def _text_series(frame: pd.DataFrame, view: str, response_col: str = "response")
     raise ValueError(view)
 
 
-def run_tfidf(frame: pd.DataFrame, view: str, response_col: str = "response") -> dict:
-    print(f"\n=== tfidf {view} ===", flush=True)
-    train_df = _split(frame, "train")
-    test_df = _split(frame, "test")
-    pipe = Pipeline(
-        [
-            (
-                "tfidf",
-                TfidfVectorizer(
-                    lowercase=True,
-                    ngram_range=(1, 2),
-                    min_df=2,
-                    max_features=TFIDF_MAX_FEATURES,
-                ),
-            ),
-            (
-                "clf",
-                LogisticRegression(
-                    max_iter=400,
-                    C=2.0,
-                    random_state=SEED,
-                ),
-            ),
-        ]
+def _count_matrix(train_text, test_text):
+    """Each column is one word, the X_i from Naive Bayes in Chapter 1."""
+    vectorizer = CountVectorizer(
+        analyzer=tokenize,
+        min_df=2,
+        max_features=COUNT_MAX_FEATURES,
     )
-    pipe.fit(_text_series(train_df, view, response_col), train_df["model"])
-    pred = pipe.predict(_text_series(test_df, view, response_col))
-    # Map names back to ids so the confusion matrix matches the neural runs.
+    return vectorizer, vectorizer.fit_transform(train_text), vectorizer.transform(test_text)
+
+
+def _score_predictions(test_df: pd.DataFrame, pred_labels, arch: str, view: str, n_train: int) -> dict:
     y_true = test_df["model"].map(LABEL_TO_ID).to_numpy()
-    y_pred = pd.Series(pred).map(LABEL_TO_ID).to_numpy()
+    y_pred = pd.Series(pred_labels).map(LABEL_TO_ID).to_numpy()
     metrics = metric_bundle(y_true, y_pred, ID_TO_LABEL)
-    metrics["arch"] = "tfidf_logreg"
+    metrics["arch"] = arch
     metrics["view"] = view
-    metrics["n_train"] = int(len(train_df))
+    metrics["n_train"] = int(n_train)
     metrics["n_test"] = int(len(test_df))
     print(f"  TEST acc={metrics['accuracy']:.4f} macro_f1={metrics['macro_f1']:.4f}", flush=True)
     return metrics
+
+
+def run_count_baselines(frame: pd.DataFrame, view: str, response_col: str = "response") -> dict:
+    """Naive Bayes (MAP, m=1) and multi-class logistic regression on word counts."""
+    print(f"\n=== count baselines {view} ===", flush=True)
+    train_df = _split(frame, "train")
+    test_df = _split(frame, "test")
+    vectorizer, x_train, x_test = _count_matrix(
+        _text_series(train_df, view, response_col),
+        _text_series(test_df, view, response_col),
+    )
+    y_train = train_df["model"]
+    nb = MultinomialNB(alpha=NB_M)
+    nb.fit(x_train, y_train)
+    lr = LogisticRegression(C=np.inf, solver="lbfgs", max_iter=500)
+    lr.fit(x_train, y_train)
+    out = {
+        "nb": _score_predictions(test_df, nb.predict(x_test), "naive_bayes", view, len(train_df)),
+        "lr": _score_predictions(test_df, lr.predict(x_test), "logreg", view, len(train_df)),
+    }
+    if view == "output":
+        # Chapter 1: the weight on a feature is how important that feature is.
+        names = np.array(vectorizer.get_feature_names_out())
+        top = {}
+        for index, label in enumerate(lr.classes_):
+            weights = lr.coef_[index]
+            order = np.argsort(weights)
+            top[str(label)] = {
+                "high": [
+                    {"word": str(names[j]), "weight": float(weights[j])}
+                    for j in order[-12:][::-1]
+                ],
+                "low": [
+                    {"word": str(names[j]), "weight": float(weights[j])}
+                    for j in order[:8]
+                ],
+            }
+        out["lr_top_words"] = top
+        test_counts = x_test
+        clusters = KMeans(n_clusters=len(LABELS), n_init=10, random_state=SEED)
+        assigned = clusters.fit_predict(test_counts)
+        gold = test_df["model"].to_numpy()
+        # Purity: for each cluster, the most common gold label's share, then average by size.
+        purity_hits = 0
+        for cluster_id in range(len(LABELS)):
+            members = gold[assigned == cluster_id]
+            if len(members) == 0:
+                continue
+            purity_hits += int(pd.Series(members).value_counts().iloc[0])
+        out["kmeans"] = {
+            "k": len(LABELS),
+            "nmi": float(normalized_mutual_info_score(gold, assigned)),
+            "purity": purity_hits / max(len(gold), 1),
+            "n_test": int(len(gold)),
+        }
+        print(
+            f"  kmeans NMI={out['kmeans']['nmi']:.4f} purity={out['kmeans']['purity']:.4f}",
+            flush=True,
+        )
+    return out
 
 
 def per_model_recall(metrics: dict) -> dict:
@@ -193,66 +238,73 @@ def main() -> None:
         "split_counts": frame.groupby(["split", "model"]).size().unstack().to_dict(),
         "domain_counts": counts.to_dict(),
         "neural": {},
-        "tfidf": {},
+        "baselines": {},
         "rq3": {},
         "ablations": {},
+        "extras": {},
     }
 
-    # RQ1 and RQ2 neural runs. Output-only is RQ1; the three views are RQ2.
+    # RQ1 and RQ2. Output-only is RQ1. The three views are RQ2.
+    # "both" is the Chapter 7 concatenation of the instruction and the response.
+    display = {"cnn": "CNN", "lstm": "LSTM"}
     curve_bundle = {}
     for view in ("output", "input", "both"):
-        for arch in ("cnn", "rnn"):
+        for arch in ("cnn", "lstm"):
             metrics = run_neural(frame, arch, view, tag=f"rq_{view}_{arch}")
             results["neural"][f"{arch}_{view}"] = metrics
             if view == "output":
-                curve_bundle[arch.upper()] = metrics["history"]
+                curve_bundle[display[arch]] = metrics["history"]
                 confusion(
                     metrics["confusion_matrix"],
                     metrics["labels"],
-                    f"{arch.upper()} output-only test confusion",
+                    f"{display[arch]} output-only test counts",
                     FIG_DIR / f"cm_{arch}_output.png",
                 )
     training_curves(curve_bundle, FIG_DIR / "training_curves_output.png")
 
     for view in ("output", "input", "both"):
-        results["tfidf"][view] = run_tfidf(frame, view)
+        results["baselines"][view] = run_count_baselines(frame, view)
+
+    # Extras that the lectures do not cover, scored only on output text.
+    for arch in ("bilstm", "cnn_multi"):
+        results["extras"][arch] = run_neural(frame, arch, "output", tag=f"extra_{arch}")
 
     rq2_rows = []
     for view in ("input", "output", "both"):
-        for arch, bucket in (("cnn", results["neural"]), ("rnn", results["neural"]), ("tfidf", results["tfidf"])):
-            if arch == "tfidf":
-                score = bucket[view]["macro_f1"]
-                acc = bucket[view]["accuracy"]
-                model_name = "TF-IDF LR"
-            else:
-                score = bucket[f"{arch}_{view}"]["macro_f1"]
-                acc = bucket[f"{arch}_{view}"]["accuracy"]
-                model_name = arch.upper()
-            rq2_rows.append({"setting": view, "model": model_name, "score": score, "accuracy": acc})
-    grouped_bars(rq2_rows, "RQ2: macro-F1 by text view", FIG_DIR / "rq2_views.png")
+        for arch, model_name in (("cnn", "CNN"), ("lstm", "LSTM")):
+            block = results["neural"][f"{arch}_{view}"]
+            rq2_rows.append(
+                {"setting": view, "model": model_name, "score": block["macro_f1"], "accuracy": block["accuracy"]}
+            )
+        for key, model_name in (("nb", "Naive Bayes"), ("lr", "Logistic regression")):
+            block = results["baselines"][view][key]
+            rq2_rows.append(
+                {"setting": view, "model": model_name, "score": block["macro_f1"], "accuracy": block["accuracy"]}
+            )
+    grouped_bars(rq2_rows, "RQ2: average F by text view", FIG_DIR / "rq2_views.png")
     results["rq2_plot_rows"] = rq2_rows
 
-    # RQ3: writing held out, and code held out.
+    # RQ3: writing held out, and code held out. Source task S, target task T (Ch6).
     for held in ("writing", "code"):
-        for arch in ("cnn", "rnn"):
+        for arch in ("cnn", "lstm"):
             results["rq3"][f"{arch}_{held}"] = run_rq3_both_tests(frame, arch, held)
 
     rq3_rows = []
     for held in ("writing", "code"):
-        for arch in ("cnn", "rnn"):
+        for arch in ("cnn", "lstm"):
             block = results["rq3"][f"{arch}_{held}"]
             rq3_rows.append(
-                {"setting": f"in-domain (no {held})", "model": arch.upper(), "score": block["in_domain"]["macro_f1"], "held": held}
+                {"setting": f"in-domain (no {held})", "model": display[arch], "score": block["in_domain"]["macro_f1"], "held": held}
             )
             rq3_rows.append(
-                {"setting": f"test on {held}", "model": arch.upper(), "score": block["cross"]["macro_f1"], "held": held}
+                {"setting": f"test on {held}", "model": display[arch], "score": block["cross"]["macro_f1"], "held": held}
             )
     # Two figures, one per held-out domain, so the bars stay readable.
     for held in ("writing", "code"):
         rows = [r for r in rq3_rows if r["held"] == held]
         grouped_bars(
             rows,
-            f"RQ3 macro-F1 when {held} is held out of training",
+            f"RQ3 average F when {held} is held out of training",
             FIG_DIR / f"rq3_{held}.png",
         )
 
@@ -266,14 +318,14 @@ def main() -> None:
     ablation_rows = []
     base_scores = {
         "cnn": results["neural"]["cnn_output"]["macro_f1"],
-        "rnn": results["neural"]["rnn_output"]["macro_f1"],
+        "lstm": results["neural"]["lstm_output"]["macro_f1"],
     }
-    for arch in ("cnn", "rnn"):
-        ablation_rows.append({"setting": "original", "model": arch.upper(), "score": base_scores[arch]})
+    for arch in ("cnn", "lstm"):
+        ablation_rows.append({"setting": "original", "model": display[arch], "score": base_scores[arch]})
     for ablation_name, fn in ABLATIONS.items():
         altered = frame.copy()
         altered["response_ablated"] = altered["response"].map(fn)
-        for arch in ("cnn", "rnn"):
+        for arch in ("cnn", "lstm"):
             metrics = run_neural(
                 altered,
                 arch,
@@ -284,9 +336,9 @@ def main() -> None:
             # The neural runner reads column via response_col for encoding, good.
             results["ablations"][f"{arch}_{ablation_name}"] = metrics
             ablation_rows.append(
-                {"setting": ablation_name, "model": arch.upper(), "score": metrics["macro_f1"]}
+                {"setting": ablation_name, "model": display[arch], "score": metrics["macro_f1"]}
             )
-    grouped_bars(ablation_rows, "RQ4 ablations: output-only macro-F1", FIG_DIR / "rq4_ablations.png")
+    grouped_bars(ablation_rows, "RQ4 ablations: output-only average F", FIG_DIR / "rq4_ablations.png")
     results["ablation_plot_rows"] = ablation_rows
 
     # Compact headline block for the report writer.
@@ -297,21 +349,46 @@ def main() -> None:
                 "macro_f1": results["neural"][f"{arch}_output"]["macro_f1"],
                 "per_class": results["neural"][f"{arch}_output"]["per_class"],
             }
-            for arch in ("cnn", "rnn")
+            for arch in ("cnn", "lstm")
         },
-        "rq1_tfidf": {
-            "accuracy": results["tfidf"]["output"]["accuracy"],
-            "macro_f1": results["tfidf"]["output"]["macro_f1"],
-            "per_class": results["tfidf"]["output"]["per_class"],
+        "rq1_baselines": {
+            key: {
+                "accuracy": results["baselines"]["output"][key]["accuracy"],
+                "macro_f1": results["baselines"]["output"][key]["macro_f1"],
+                "per_class": results["baselines"]["output"][key]["per_class"],
+            }
+            for key in ("nb", "lr")
+        },
+        "rq1_extras": {
+            arch: {
+                "accuracy": results["extras"][arch]["accuracy"],
+                "macro_f1": results["extras"][arch]["macro_f1"],
+            }
+            for arch in ("bilstm", "cnn_multi")
         },
         "rq2_macro_f1": {
-            f"{arch}_{view}": (
-                results["tfidf"][view]["macro_f1"]
-                if arch == "tfidf"
-                else results["neural"][f"{arch}_{view}"]["macro_f1"]
-            )
-            for arch in ("cnn", "rnn", "tfidf")
-            for view in ("input", "output", "both")
+            **{
+                f"{arch}_{view}": results["neural"][f"{arch}_{view}"]["macro_f1"]
+                for arch in ("cnn", "lstm")
+                for view in ("input", "output", "both")
+            },
+            **{
+                f"{key}_{view}": results["baselines"][view][key]["macro_f1"]
+                for key in ("nb", "lr")
+                for view in ("input", "output", "both")
+            },
+        },
+        "rq2_accuracy": {
+            **{
+                f"{arch}_{view}": results["neural"][f"{arch}_{view}"]["accuracy"]
+                for arch in ("cnn", "lstm")
+                for view in ("input", "output", "both")
+            },
+            **{
+                f"{key}_{view}": results["baselines"][view][key]["accuracy"]
+                for key in ("nb", "lr")
+                for view in ("input", "output", "both")
+            },
         },
         "rq3_drops": {
             key: {

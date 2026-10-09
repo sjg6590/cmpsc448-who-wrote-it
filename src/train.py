@@ -15,15 +15,7 @@ from sklearn.metrics import (
 )
 from torch.utils.data import DataLoader, Dataset
 
-from src.config import (
-    BATCH_SIZE,
-    GRAD_CLIP,
-    LR,
-    MAX_EPOCHS,
-    PATIENCE,
-    SEED,
-    WEIGHT_DECAY,
-)
+from src.config import BATCH_SIZE, LR, MAX_EPOCHS, PATIENCE, SEED
 from src.textutil import Vocab, encode_view, pad_batch, tokenize
 
 
@@ -129,11 +121,14 @@ def train_model(
     device: torch.device,
 ) -> tuple[nn.Module, list[dict]]:
     model.to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
+    # Adam, Chapter 9. No weight decay: the lecture's update is w <- w - alpha * grad.
+    optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+    # CrossEntropyLoss is softmax followed by negative log-likelihood (Chapter 9).
     criterion = nn.CrossEntropyLoss()
     history = []
     best_state = None
-    best_f1 = -1.0
+    best_score = -1.0
+    best_epoch = 0
     wait = 0
     for epoch in range(1, MAX_EPOCHS + 1):
         model.train()
@@ -146,7 +141,6 @@ def train_model(
             logits = model(tokens)
             loss = criterion(logits, labels)
             loss.backward()
-            nn.utils.clip_grad_norm_(model.parameters(), GRAD_CLIP)
             optimizer.step()
             total_loss += loss.item() * labels.size(0)
             seen += labels.size(0)
@@ -164,15 +158,20 @@ def train_model(
             f"val_acc={row['val_accuracy']:.4f} val_f1={row['val_macro_f1']:.4f}",
             flush=True,
         )
-        if val_metrics["macro_f1"] > best_f1 + 1e-4:
-            best_f1 = val_metrics["macro_f1"]
+        # Chapter 1's reported number is accuracy, so that is what picks the epoch.
+        score = val_metrics["accuracy"]
+        if score > best_score + 1e-4:
+            best_score = score
+            best_epoch = epoch
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             wait = 0
         else:
             wait += 1
             if wait >= PATIENCE:
-                print(f"  early stop at epoch {epoch}", flush=True)
+                print(f"  validation accuracy stopped improving at epoch {epoch}", flush=True)
                 break
     if best_state is not None:
         model.load_state_dict(best_state)
+    for row in history:
+        row["selected"] = row["epoch"] == best_epoch
     return model, history

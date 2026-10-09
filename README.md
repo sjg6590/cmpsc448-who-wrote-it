@@ -1,55 +1,38 @@
 # Who Wrote It? Identifying LLMs from Their Responses
 
-CMPSC 448 individual project. Team leader and sole member: **Shaun Gulati**.
+CMPSC 448 individual project. Team leader and sole member: **Shaun Gulati**. I am not presenting.
 
-The project trains a CNN and a bidirectional LSTM to predict which model wrote a response. The four models are Bard, Falcon-40B-Instruct, GPT-4, and Llama-2-70B-Chat, taken from the public [UltraFeedback](https://huggingface.co/datasets/openbmb/UltraFeedback) dataset (MIT license). Research questions RQ1 and RQ2 are required; RQ3 and RQ4 are the extra-credit analyses.
-
-Shaun is not presenting, so there are no slides. The write-up is `report/report.pdf`.
+The write-up is `report/report.pdf`. It uses the models from lecture: a CNN (convolution, ReLU, max-pooling) and a one-direction LSTM (the label comes from the last hidden state). Naive Bayes and logistic regression are the Chapter 1 baselines. The numbers are in `results/metrics.json`.
 
 ## What is in the repo
 
-| Path | Role |
+| Path | What it is |
 | --- | --- |
-| `src/prepare_data.py` | Download UltraFeedback (if needed), filter, label domains, balance, split |
-| `src/domains.py` | Rules that assign each prompt to code, reasoning, qa, or writing |
-| `src/models.py` | Text CNN and BiLSTM |
-| `src/train.py` | Seeded training loop, early stopping, metrics |
-| `src/run_all.py` | RQ1–RQ4, TF-IDF baseline, figures |
-| `src/features.py` | Length, lexical diversity, punctuation, markdown |
-| `data/processed/samples.csv.gz` | The exact table the experiments used |
-| `data/processed/summary.json` | Filter counts and class balance |
-| `results/metrics.json` | Every reported test number |
-| `results/figures/` | Confusion matrices, curves, RQ plots |
-| `report/report.pdf` | Project report |
+| `src/prepare_data.py` | Download UltraFeedback if needed, filter, label tasks, balance, split |
+| `src/domains.py` | Rules that mark a prompt as code, reasoning, qa, or writing |
+| `src/models.py` | The CNN and the LSTM |
+| `src/train.py` | Adam, negative log-likelihood, validation accuracy picks the epoch |
+| `src/run_all.py` | RQ1 through RQ4 |
+| `data/processed/samples.csv.gz` | The table the experiments used |
+| `results/metrics.json` | The test numbers in the report |
+| `results/figures/` | Plots |
+| `report/report.pdf` | The report |
 
-Raw UltraFeedback JSONL files are downloaded into `data/raw/ultrafeedback/` and are gitignored. The processed subset is committed so the report can be regenerated without another download.
+Raw UltraFeedback files go in `data/raw/ultrafeedback/` and are not committed.
 
 ## Reproduce
 
 ```bash
 pip install -r requirements.txt
-python -m src.prepare_data   # optional if samples.csv.gz is already present
-python -m src.run_all        # CPU, on the order of 30–45 minutes
+python -m src.prepare_data   # skip this if samples.csv.gz is already there
+python -m src.run_all        # CPU. Expect on the order of an hour.
 cd report && pdflatex report.tex && pdflatex report.tex
 ```
 
-`src/run_all.py` overwrites `results/`. Fixed seed: **42**. Device: CPU. Early stopping watches validation macro-F1 (patience 2, at most 6 epochs) and reloads the best epoch before the test set is scored.
+Seed is 42. Batch size is 64. Learning rate is 0.001. At most 12 epochs. Training stops if validation accuracy does not improve for 3 epochs. The test set is scored once, with the best validation epoch.
 
-## Dataset, in short
+## Data, short version
 
-UltraFeedback queried a pool of models with prompts from ShareGPT, UltraChat, Evol-Instruct, FLAN, TruthfulQA, and FalseQA, four models per prompt. This project keeps one model from each of four families:
+UltraFeedback is MIT licensed. I kept Bard, Falcon-40B-Instruct, GPT-4, and Llama-2-70B-Chat. I dropped three FLAN subsets that never queried Bard, so the prompt template cannot give Bard away. Each model has the same count inside each task (at most 700). The split is by prompt, 70/15/15. No prompt is in more than one split.
 
-- Bard (Google)
-- Falcon-40B-Instruct (TII)
-- GPT-4 (OpenAI)
-- Llama-2-70B-Chat (Meta)
-
-FLAN subsets that contain no Bard completions (`flan_v2_niv2`, `flan_v2_p3`, `flan_v2_flan2021`) are dropped so a prompt's source cannot give Bard away. Each model is then downsampled to the same count inside each domain (at most 700). Splits are by prompt, 70/15/15, stratified by domain, so no prompt appears in more than one split. Details and the domain rules are in the report.
-
-## Models
-
-- **CNN.** Kim (2014) style: embedding size 128, convolutions of width 3, 4, and 5 with 96 filters, max-pool, dropout 0.5.
-- **RNN.** One-layer bidirectional LSTM, hidden size 64 per direction, dropout 0.3, final states concatenated.
-- **Baseline.** Word/bigram TF-IDF (20k features) and logistic regression.
-
-Sequences are lowercased, truncated to 128 tokens, and the vocabulary (12k) is fit on the training split only. For the input+output view, the instruction is capped at 40 tokens and the response at 87 so the response is not truncated away.
+The main CNN uses one filter width, 3, as in the 1D convolution example from class. The main RNN is not bidirectional. A bidirectional LSTM and a CNN with widths 3, 4, and 5 are extra comparisons on the output-only task only.

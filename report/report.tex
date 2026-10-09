@@ -5,17 +5,13 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
-\usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{enumitem}
-\usepackage{titlesec}
 
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black}
 \setlist[itemize]{topsep=2pt, itemsep=2pt}
 \captionsetup{font=small, skip=6pt}
-\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
 
 \begin{document}
 
@@ -31,12 +27,13 @@ Identifying LLMs from Their Responses\par}
 {\large Team leader and sole member\\[0.4em]
 \bfseries Shaun Gulati\par}
 \vspace{0.6in}
-{\large Individual project (not presenting)\\
-Default presentation score applies\par}
+{\large Individual project. I am not presenting.\\
+The default presentation score applies.\par}
 \vspace{1.2in}
 {\large October 11, 2026\par}
 \vfill
-{\normalsize Department of Computer Science and Engineering\\
+{\normalsize CMPSC 448: Machine Learning and Algorithmic AI\\
+Instructor: Wenpeng Yin\\
 The Pennsylvania State University\par}
 \end{titlepage}
 \hypersetup{pageanchor=true}
@@ -44,41 +41,39 @@ The Pennsylvania State University\par}
 \tableofcontents
 \newpage
 
-\section{Problem definition}
+\section{Problem}
 \label{sec:problem}
 
-Large language models now produce a large share of the text people read. The practical question in this project is whether that text still carries an identifiable author: given a response, can a classifier recover which model wrote it?
+The question in this project is simple. Given text that a language model wrote, can I tell which model wrote it?
 
-The task is four-way classification. Each example is a triple $(\text{model}, \text{instruction}, \text{response})$. The label is the model. The instruction is the user prompt. The response is the model output. The system prompt that UltraFeedback attached to each completion (a randomly sampled ``principle'' such as helpfulness or honesty) is \emph{not} shown to the classifier. Including it would mix a dataset-construction choice into the fingerprint.
+I treat this as supervised learning, the way Chapter 1 sets it up. Each example is a pair $(x, y)$. The gold label $y$ is the model name. The input $x$ is some text: the response, the user's instruction, or both. I want a function $f(x)$ that predicts $y$.
 
-Four research questions organize the experiments:
+There are four labels, so a guess would be right about one time in four. Accuracy of 0.25 is the chance line. The four models are balanced, so that number is fair.
+
+I looked at four questions:
 
 \begin{itemize}
-\item \textbf{RQ1.} Using only the response, how accurately can a CNN and an RNN name the model?
-\item \textbf{RQ2.} Does the user prompt help? Compare input only, output only, and input concatenated with output. If the prompt alone predicts the model, the dataset rather than the writing style is doing the work.
-\item \textbf{RQ3 (extra credit).} Train without one task type and test on that task type. A drop means the classifier was using task-specific habits. A small drop means the fingerprint transfers.
-\item \textbf{RQ4 (extra credit).} Measure surface differences (length, lexical diversity, punctuation, markdown) and retrain after those signals are stripped.
+\item \textbf{RQ1.} If $x$ is only the response, how well can a CNN and an LSTM name the model?
+\item \textbf{RQ2.} Does the user's instruction help? I compare the instruction alone, the response alone, and the two concatenated. Chapter 7 trains instruction-tuned models on a concatenated (instruction, input) pair. I used the same idea, with the response in the input slot.
+\item \textbf{RQ3.} If I train on some tasks and test on a task I left out, does the score drop? Chapter 6 talks about a source task $S$ and a target task $T$, and says labeled data from $S$ may not adapt well to a new domain. Chapter 7 says the instructions at train time and test time should match.
+\item \textbf{RQ4.} What makes the responses look different? Chapter 7 (instruction tuning) and Chapter 8 (RLHF) are the course explanation for why models pick up different habits. I measure those habits and then delete some of them and retrain.
 \end{itemize}
 
-Chance accuracy and chance macro-F1 are both $0.25$ because the four classes are balanced. Every number below comes from the run recorded in \texttt{results/metrics.json}. The seed is 42.
+Every number below comes from one run with seed 42. The file is \texttt{results/metrics.json}.
 
-\section{Dataset curation}
+\section{Dataset}
 \label{sec:data}
 
-\subsection{Source and license}
+\subsection{Where the text came from}
 
-The data are the public UltraFeedback release \cite{cui2023ultrafeedback}, hosted as \href{https://huggingface.co/datasets/openbmb/UltraFeedback}{\texttt{openbmb/UltraFeedback}} under the MIT license. UltraFeedback collected about 64k prompts from ShareGPT, UltraChat, Evol-Instruct, TruthfulQA, FalseQA, and FLAN, then asked four models drawn from a pool of roughly seventeen to answer each prompt. This project does not call any model API and does not add private chats.
+I used UltraFeedback \cite{cui2023ultrafeedback}, the public set at \href{https://huggingface.co/datasets/openbmb/UltraFeedback}{\texttt{openbmb/UltraFeedback}}. The license is MIT. I did not call any model API, and I did not use my own chats.
 
-Upstream prompts have their own histories (ShareGPT conversations, in particular, were written by third parties). The copy used here is the MIT-licensed UltraFeedback redistribution, which is the artifact this repository downloads. Responses shorter than 40 characters, responses that are not strings, and responses that are mostly non-Latin script are removed. Instructions shorter than 12 characters are removed.
-
-\subsection{Models}
-
-The assignment asks for at least three LLM families and a reasonably balanced label set. Four families are used, one checkpoint each:
+UltraFeedback took prompts from ShareGPT, UltraChat, Evol-Instruct, TruthfulQA, FalseQA, and FLAN. For each prompt it asked four models from a larger pool to answer. I kept one model from each of four families:
 
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-Label & Family & Organization \\
+Label & Family & Who trained it \\
 \midrule
 \texttt{bard} & Bard & Google \\
 \texttt{falcon-40b-instruct} & Falcon & Technology Innovation Institute \\
@@ -88,34 +83,36 @@ Label & Family & Organization \\
 \end{tabular}
 \end{center}
 
-These four were chosen because each comes from a different base-model family and each has thousands of completions on the sources below. WizardLM, Vicuna, and UltraLM were left out on purpose: they are Llama fine-tunes, so a ``family'' label would be muddy. StarChat was left out because it was built for code and would make the code domain a shortcut to the label.
+I left out WizardLM, Vicuna, and UltraLM because those are Llama models with extra training. I wanted the family itself to be different. I left out StarChat because it is a code model, so a code prompt would almost give the label away.
 
-\subsection{A sampling artifact that was removed}
+I dropped responses shorter than 40 characters, responses that were not text, and responses that were mostly not Latin letters. I dropped instructions shorter than 12 characters. The released files do not include the \texttt{id} field from the dataset card, so I hashed the instruction and used that as the prompt id.
 
-Bard has no completions on \texttt{flan\_v2\_niv2}, \texttt{flan\_v2\_p3}, or \texttt{flan\_v2\_flan2021} (17,939 prompts). Those FLAN items have a very recognizable template (``You will be given a definition of a task\ldots''). If they had been kept, two bad things would follow. Input-only classification could rule out Bard whenever it saw that template. Output-only classification could use the fact that Bard never produced the short FLAN-style answers those templates elicit. Both would be availability artifacts, not fingerprints. Those three sources are excluded. On the sources that remain, all four models were actually queried, and their source counts are similar before balancing.
+\subsection{A hole I had to close}
 
-\subsection{Domain labels}
+Bard has no answers on three FLAN subsets: \texttt{flan\_v2\_niv2}, \texttt{flan\_v2\_p3}, and \texttt{flan\_v2\_flan2021}. That is 17,939 prompts. Those prompts use a very fixed template. If I had kept them, two things would go wrong. The instruction alone could rule out Bard. The responses would also look different, because those templates ask for short answers and Bard never wrote them. That is not a writing style. It is a missing row in the table. I dropped those sources. On the sources I kept, all four models were actually queried.
 
-RQ3 needs a task label. UltraFeedback does not ship one, so each prompt is labeled from the instruction text and the source name. The label does not look at the response. Priority is code, then writing, then reasoning, then question answering. Anything else is dropped (9,681 prompts).
+\subsection{Task labels}
+
+RQ3 needs a task. UltraFeedback does not give one, so I labeled each instruction with rules in \texttt{src/domains.py}. The label does not look at the response. I check code first, then writing, then reasoning, then question answering. I dropped prompts that matched none of these (9,681 prompts).
 
 \begin{itemize}
-\item \textbf{Code.} A fenced block, a named programming language, or a phrase such as ``write a function'' or ``implement a program.'' The bare word ``function'' is not used; it matches too much ordinary prose.
-\item \textbf{Writing.} A request to produce a story, poem, essay, email, article, letter, speech, summary, or similar. Checked after code so ``write a Python script'' stays in code.
-\item \textbf{Reasoning.} Whatever remains of \texttt{flan\_v2\_cot}: natural-language inference, multiple choice, and step-by-step word problems, including some arithmetic. This is the mathematics-and-reasoning bucket. A pure ``math'' slice was too small once false positives such as the word ``proof'' in non-math prompts were removed.
-\item \textbf{QA.} TruthfulQA, FalseQA, and any remaining prompt that asks a question or begins with what, who, why, how, or explain.
+\item \textbf{Code.} A code fence, a language name, or a phrase like ``write a function.'' I did not use the word ``function'' by itself. It shows up in normal sentences.
+\item \textbf{Writing.} A request for a story, poem, essay, email, article, letter, speech, or summary.
+\item \textbf{Reasoning.} What is left of \texttt{flan\_v2\_cot}: entailment items, multiple choice, and step-by-step word problems. A clean ``math only'' bucket was too small once I stopped matching the word ``proof'' in ordinary sentences.
+\item \textbf{QA.} TruthfulQA, FalseQA, and remaining questions.
 \end{itemize}
 
-The rules are heuristics. A prompt about ``the history of algebra'' can land in QA rather than reasoning, and a ``write a summary'' prompt lands in writing even though it is less open-ended than a short story. The rules are frozen in \texttt{src/domains.py} and were not tuned against classifier accuracy.
+These rules are rough. A summary is not the same kind of writing as a short story. I froze the rules before I looked at test scores.
 
-\subsection{Balancing and splits}
+\subsection{Balance and the split}
 
-After filtering, question answering was several times larger than writing. Each model is downsampled, inside each domain, to the same count, and that count is capped at 700. The resulting cell sizes are code 676, QA 700, reasoning 664, and writing 627 per model (10,668 rows, 8,948 distinct prompts). Models are exactly balanced within every domain. Splits are slightly uneven because the split is by prompt, and a prompt may have been answered by only some of the four models.
+Question answering was much larger than writing. Inside each task I kept the same number of rows for each model, and I capped that number at 700. The cell sizes are code 676, QA 700, reasoning 664, and writing 627 per model. That is 10,668 rows and 8,948 prompts.
 
-The released JSONL does not contain the \texttt{id} field shown on the dataset card. The prompt key is the source name plus a SHA-1 prefix of the instruction. All completions of one prompt are assigned to the same split, stratified by domain, at 70/15/15. Overlap of prompt ids between train, validation, and test is zero.
+Chapter 1 splits with \texttt{train\_test\_split} and a 20\% test set. I also needed a validation set, because Chapter 9 says to look at the validation curve when you choose training settings. I used 70\% train, 15\% validation, and 15\% test. The split is by prompt, and it is stratified by task. Every answer to one prompt stays in one split. No prompt id is in two splits. The counts are a little uneven across models because one prompt was not always answered by all four models.
 
 \begin{table}[H]
 \centering
-\caption{Rows by split and model after balancing.}
+\caption{Rows by split and model.}
 \label{tab:splits}
 \begin{tabular}{lrrrr}
 \toprule
@@ -131,198 +128,200 @@ Test & 385 & 409 & 377 & 419 \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.72\textwidth]{../results/figures/domain_balance.png}
-\caption{Counts by domain and model. Within a domain the four models match.}
+\caption{Counts by task and model after balancing. Within a task the four models match.}
 \label{fig:balance}
 \end{figure}
 
-Responses longer than 6,000 characters are truncated only in the stored text (this affects well under one percent of rows). Length statistics in RQ4 use the word count measured before that cap.
+I stored at most 6,000 characters of each response. Almost no rows hit that cap. When I talk about length in RQ4, I use the word count from before the cap.
+
+UltraFeedback also wrapped each call in a random ``principle'' prompt, such as helpfulness or honesty. I never show that prompt to the classifier. The response was still generated under it. I come back to that in RQ4.
 
 \section{Models and training}
 \label{sec:models}
 
-Both required architectures are implemented in PyTorch and trained on CPU. A TF-IDF logistic regression is included as a non-neural baseline so the neural numbers have something to be compared with. It is not a substitute for the CNN or the RNN.
+Both neural models are many-to-one classifiers, like the sentiment example in Chapter 4. A sequence of word vectors goes in. One label comes out. The scores go through a softmax, and the loss is negative log-likelihood, as in Chapter 9. In PyTorch that is \texttt{CrossEntropyLoss}. The optimizer is Adam, which Chapter 9 calls the usual choice. The learning rate is $\alpha = 10^{-3}$. The batch size is $|B| = 64$. Chapter 9 says a batch size is often a power of two and somewhere between 1 and a few hundred. I did not do a batch-size search. The validation curve for the CNN rose and then flattened, so I left $|B|$ alone.
 
-\subsection{Text representation}
+I did not use dropout or weight decay. We did not cover those. I also did not clip gradients. On one ablation the CNN loss blew up anyway. I say more about that in the lessons.
 
-Tokens are words and punctuation, lowercased. Case is therefore not available to the networks; punctuation and markdown characters still are, because they are tokens. The vocabulary is the 12,000 most common training tokens with frequency at least 2, plus pad, unknown, and a separator. It is rebuilt for every view and every ablation from that run's training text only. Validation and test tokens that were not seen in training become \texttt{<unk>}.
+\subsection{Words and vectors}
 
-Sequences are truncated to 128 tokens and padded with zeros. The pad embedding is frozen at zero. For the input+output view, truncation is not applied to the raw concatenation, which would often delete the response. The instruction is limited to 40 tokens, a separator is inserted, and the response is limited to 87 tokens.
+I split text into words and punctuation and then lowercase it. Chapter 6 says each word gets one vector. I learned that table while training. The vocabulary is the 12,000 most common training words that appear at least twice, plus a pad token, an unknown token, and a separator. Validation and test words that were not in training become unknown. I did not load GloVe or word2vec. Those are the static embeddings from Chapter 6, one vector per word for every context. Mine is the same kind of table, but it is learned on this dataset.
+
+Sequences are cut at 128 tokens. For the concatenated view I keep at most 40 tokens of the instruction and 87 tokens of the response, with a separator in between. If I had cut the raw concatenation at 128, a long instruction would have deleted the response.
 
 \subsection{CNN}
 
-The CNN follows Kim (2014). A 128-dimensional embedding is convolved with filters of width 3, 4, and 5 (96 filters each). Each map is passed through ReLU and collapsed with global max-pooling. The three pooled vectors are concatenated, dropped out with probability 0.5, and mapped to four logits. Max-pooling lets a local phrase, wherever it sits, drive the decision. That is a good match to stock openings (``Sure, here's'') and stock markdown.
+Chapter 4 builds a CNN as convolution, then ReLU, then max-pooling, then a fully connected layer. The 1D example uses a width-3 filter and zero padding on both ends. I did that. The input to the convolution is the sequence of 128-dimensional word vectors. I use 96 filters, so there are 96 activation maps. Each map is a channel, which the lecture calls one version of the representation. After ReLU I take the max over time. That is the ``most representative'' feature from the pooling slides. A linear layer turns the 96 numbers into 4 scores.
 
-\subsection{RNN}
+The lecture's CNN-versus-RNN slide says a CNN is fast, sees left and right context, and only sees local context. That is the model I report as the CNN.
 
-The RNN is a one-layer bidirectional LSTM with hidden size 64 in each direction. Padding is excluded from the recurrence with \texttt{pack\_padded\_sequence}. The final forward and backward states are concatenated, dropped out with probability 0.3, and mapped to four logits. Hidden size 64 is smaller than a typical GPU setup. It is the size that keeps the full RQ1--RQ4 grid on CPU in well under an hour; the CNN is the higher-capacity model in this comparison.
+I also tried filter widths 3, 4, and 5 together, on the output-only task only. Chapter 4 never discusses more than one width. I found that setup outside of class. It is an extra comparison, not the main CNN.
 
-\subsection{Optimization}
+\subsection{LSTM}
 
-\begin{table}[H]
-\centering
-\caption{Training setup shared by the CNN and the BiLSTM.}
-\label{tab:hparams}
-\begin{tabular}{ll}
-\toprule
-Choice & Value \\
-\midrule
-Loss & Cross-entropy \\
-Optimizer & Adam, learning rate $10^{-3}$, weight decay $10^{-5}$ \\
-Batch size & 64 \\
-Max epochs & 6 \\
-Early stopping & Validation macro-F1, patience 2 \\
-Checkpoint & Best validation macro-F1, then evaluated once on test \\
-Gradient clip & Global norm 1.0 (mainly for the LSTM) \\
-Seed & 42 for Python, NumPy, and PyTorch \\
-\bottomrule
-\end{tabular}
-\end{table}
+The required RNN is the LSTM from Chapter 4, in one direction. The lecture writes one step as
+\begin{align*}
+i_t &= \sigma(x_t U^{i} + h_{t-1} W^{i} + b_i) \\
+f_t &= \sigma(x_t U^{f} + h_{t-1} W^{f} + b_f) \\
+o_t &= \sigma(x_t U^{o} + h_{t-1} W^{o} + b_o) \\
+q_t &= \tanh(x_t U^{q} + h_{t-1} W^{q} + b_q) \\
+p_t &= f_t * p_{t-1} + i_t * q_t \\
+h_t &= o_t * \tanh(p_t).
+\end{align*}
+$i_t$, $f_t$, and $o_t$ are the input, forget, and output gates. $q_t$ is the candidate update. $p_t$ is the cell state. $h_t$ is the hidden vector the rest of the network uses. $U$ multiplies the current input and $W$ multiplies the previous hidden state. The same weights are used at every time step.
 
-The test set is not used for early stopping or for vocabulary construction. The TF-IDF baseline uses unigrams and bigrams, a minimum document frequency of 2, at most 20,000 features, and logistic regression with $C=2$.
+PyTorch's \texttt{nn.LSTM} is this recurrence. I use one layer and a hidden size of 128. For a many-to-one model the label is read from $h_T$, the hidden state at the end of the real text. Padding is not a word. If I had let the pad steps run, they would have overwritten $h_T$. I pack the batch so the recurrence stops at the last real word. We did not cover packing in class. It is only there so different lengths can share a batch.
 
-\subsection{What each research question trains}
+Chapter 4 says this kind of RNN only sees one side, but it can carry information a long way. It is also slow because the steps are in order. I felt that while training. The CNN epochs were quick. The LSTM epochs were not.
 
-RQ1 is the output-only CNN and the output-only RNN on the mixed-domain split. RQ2 repeats both architectures on input only and on input+output, plus the TF-IDF baseline on all three views. RQ3 retrains on output text only, once with writing removed from train and validation, and once with code removed. The held-out domain's test prompts are the cross-domain test. The other test prompts are the in-domain comparison for that same model. RQ4 retrains both architectures after each ablation of the response text. Counting the baseline, this is 6 neural runs for RQ1--RQ2, 4 for RQ3, and 8 for ablations.
+I also trained a bidirectional LSTM on the output-only task. That is two of the same LSTMs, one in each direction. We did not cover it. I tried it because the lecture lists ``one side'' as the limitation. It is an extra, not the required model.
 
-\section{RQ1: identifying the model from the response}
+\subsection{How I picked the epoch}
+
+I trained for at most 12 epochs. My first LSTM runs were still improving at epoch 6, so a cap of 6 was too low. After each epoch I scored the validation set. I kept the weights from the epoch with the best validation accuracy, which is the number Chapter 1 uses. If accuracy did not improve for 3 epochs, I stopped. The test set was not used for that choice. The CNN's chosen epoch on the output-only run was epoch 8 (validation accuracy 0.748). The LSTM's was epoch 7 (validation accuracy 0.623).
+
+\subsection{Baselines from Chapter 1}
+
+The neural nets are not the only models in the class. Chapter 1 covers Naive Bayes and logistic regression. I used both, on word counts. Each word is a feature $X_i$. The count matrix is built on the training text only, with the same 12,000-word cap.
+
+For Naive Bayes I used multinomial counts and add-one smoothing. Chapter 1 fixes zero counts with MAP and $m$ virtual points. I set $m = 1$.
+
+Logistic regression in class is a sigmoid on a linear score, for two classes. Slide 87 of Chapter 1 asks what the multi-class version should look like. I used one weight vector per class and a softmax, which is the same softmax as in Chapter 9. I did not add an extra penalty term. The solver did not fully converge on the instruction-only features. I say so in RQ2.
+
+Chapter 1 calls the weights the importance of the features. I use the logistic regression weights in RQ4.
+
+\subsection{How I score a prediction}
+
+Accuracy is the fraction of test rows I got right. For a single class, Chapter 2 defines precision and recall from the counts $n_{ij}$. If class $j$ is the gold label, precision is the share of my predicted-$j$ rows that really are $j$, and recall is the share of true $j$ rows that I found. Then $F$ mixes those two. Chapter 2 averages $F$ over the clusters, $F = (1/r)\sum_i F_i$. I do the same average over the four models. This average is often called macro-F1. I will just call it average $F$. The count tables in the figures are the $n_{ij}$ tables, with the true model on the rows and my prediction on the columns.
+
+\section{RQ1: the response alone}
 \label{sec:rq1}
 
-On the mixed-domain test set (1,590 responses), output-only classification is far above the 0.25 chance line. Table~\ref{tab:rq1} gives accuracy and macro-F1. The TF-IDF logistic regression is the strongest of the three. The CNN is close behind it. The BiLSTM is a little lower and, on the validation curve, starts to overfit: its validation macro-F1 peaks at epoch 5 (0.728) and the test numbers use that checkpoint. The CNN's best validation epoch is epoch 6 (0.727), which is also the last epoch allowed, so a longer run might still move the CNN slightly. The cap was fixed before looking at the test set.
+On the mixed test set (1,590 responses), the CNN is clearly above chance. The one-direction LSTM is above chance too, but it is much weaker. Logistic regression on word counts is close to the CNN. Naive Bayes is the weak baseline. Table~\ref{tab:rq1} has the scores.
 
 \begin{table}[H]
 \centering
-\caption{RQ1 test performance, output text only.}
+\caption{RQ1 test scores. The input is the response only.}
 \label{tab:rq1}
 \begin{tabular}{lcc}
 \toprule
-Model & Accuracy & Macro-F1 \\
+Model & Accuracy & Average $F$ \\
 \midrule
-CNN & 0.736 & 0.736 \\
-BiLSTM & 0.723 & 0.723 \\
-TF-IDF + logistic regression & 0.761 & 0.761 \\
+CNN (width 3) & 0.745 & 0.745 \\
+LSTM (one direction) & 0.590 & 0.588 \\
+Logistic regression & 0.731 & 0.732 \\
+Naive Bayes & 0.563 & 0.560 \\
+\midrule
+Bidirectional LSTM (extra) & 0.717 & 0.717 \\
+CNN with widths 3, 4, and 5 (extra) & 0.767 & 0.767 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+I was surprised by the gap between the CNN and the LSTM. I expected the LSTM to be at least as good, because Chapter 4 says it can use long context. On this data the useful cues look local: a phrase near the start, a punctuation habit, a markdown mark. The CNN is built for that. The LSTM has to push the cue all the way to $h_T$. It also only reads left to right. The bidirectional extra supports that reading. Its accuracy is 0.717, well above the one-direction LSTM at 0.590. The three filter widths help a little (0.767 versus 0.745). They are not required to beat chance.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{../results/figures/training_curves_output.png}
-\caption{Output-only training. The RNN's training loss keeps falling after validation macro-F1 has flattened.}
+\caption{Output-only training. The CNN validation score flattens. The LSTM training loss keeps falling while validation average $F$ stalls near 0.62.}
 \label{fig:curves}
 \end{figure}
 
-Per-class scores are in Table~\ref{tab:rq1class}. No class collapses. GPT-4 is the hardest for both neural nets (CNN F1 0.706, RNN F1 0.685). Bard is the easiest for the CNN (F1 0.763, precision 0.825). The TF-IDF model is especially strong on Bard (recall 0.844).
+The LSTM's training loss at the chosen epoch is 0.479, and it keeps falling after that, while validation accuracy does not. That is overfitting. The CNN's training loss at its chosen epoch is 0.107, and its test accuracy (0.745) matches its validation accuracy (0.748). The LSTM's test accuracy (0.590) is lower than its validation accuracy (0.623). I do not have a neat explanation for that gap. The test set is only 1,590 rows, so some of it is noise. I still trust the ordering: CNN above LSTM.
 
 \begin{table}[H]
 \centering
-\caption{Per-class precision, recall, and F1 on the output-only test set. Supports are 385 (Bard), 409 (Falcon), 377 (GPT-4), and 419 (Llama-2-70B).}
+\caption{Per-class precision, recall, and $F$ for the two required models. Supports are 385 (Bard), 409 (Falcon), 377 (GPT-4), and 419 (Llama-2-70B).}
 \label{tab:rq1class}
 \small
 \begin{tabular}{llccc}
 \toprule
-Classifier & Class & Precision & Recall & F1 \\
+Model & Class & Precision & Recall & $F$ \\
 \midrule
-CNN & Bard & 0.825 & 0.709 & 0.763 \\
-CNN & Falcon-40B & 0.764 & 0.719 & 0.741 \\
-CNN & GPT-4 & 0.678 & 0.737 & 0.706 \\
-CNN & Llama-2-70B & 0.700 & 0.776 & 0.736 \\
+CNN & Bard & 0.741 & 0.808 & 0.773 \\
+CNN & Falcon-40B & 0.800 & 0.694 & 0.744 \\
+CNN & GPT-4 & 0.645 & 0.774 & 0.704 \\
+CNN & Llama-2-70B & 0.820 & 0.709 & 0.761 \\
 \midrule
-BiLSTM & Bard & 0.769 & 0.743 & 0.756 \\
-BiLSTM & Falcon-40B & 0.697 & 0.741 & 0.718 \\
-BiLSTM & GPT-4 & 0.646 & 0.729 & 0.685 \\
-BiLSTM & Llama-2-70B & 0.798 & 0.680 & 0.734 \\
-\midrule
-TF-IDF LR & Bard & 0.772 & 0.844 & 0.806 \\
-TF-IDF LR & Falcon-40B & 0.717 & 0.670 & 0.693 \\
-TF-IDF LR & GPT-4 & 0.735 & 0.796 & 0.764 \\
-TF-IDF LR & Llama-2-70B & 0.821 & 0.742 & 0.779 \\
+LSTM & Bard & 0.638 & 0.701 & 0.668 \\
+LSTM & Falcon-40B & 0.611 & 0.599 & 0.605 \\
+LSTM & GPT-4 & 0.540 & 0.631 & 0.582 \\
+LSTM & Llama-2-70B & 0.569 & 0.442 & 0.497 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+No CNN class falls apart. GPT-4 is the hardest for the CNN ($F$ 0.704). Llama is the hardest for the LSTM (recall 0.442). Logistic regression is more even: its class $F$ scores are 0.758, 0.712, 0.727, and 0.730. Naive Bayes is weakest on GPT-4 ($F$ 0.490).
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.46\textwidth]{../results/figures/cm_cnn_output.png}
 \hfill
-\includegraphics[width=0.46\textwidth]{../results/figures/cm_rnn_output.png}
-\caption{Output-only confusion matrices. Rows are the true model.}
+\includegraphics[width=0.46\textwidth]{../results/figures/cm_lstm_output.png}
+\caption{Output-only count tables. Rows are the true model.}
 \label{fig:cm}
 \end{figure}
 
-The largest off-diagonal cells are between GPT-4 and Llama-2-70B. In the CNN, 56 Llama responses are predicted as GPT-4 and 48 GPT-4 responses are predicted as Llama. In the RNN, 71 Llama responses are predicted as GPT-4. Falcon is more often confused with GPT-4 than with Bard (50 CNN errors along that edge). The two long, heavily formatted chat models resemble each other; the errors are not uniform noise.
+In the CNN table, the biggest off-diagonal cell is 75 Llama responses predicted as GPT-4. In the LSTM table that cell is 101, and Llama's diagonal is only 185 out of 419. The two long chat models are the ones that get confused. Falcon is more often sent to GPT-4 than to Bard (57 CNN errors on that edge).
 
-The same output-only models are uneven across domains even when every domain was seen in training (Table~\ref{tab:bydomain}). Reasoning is easy (CNN macro-F1 0.840). Code, QA, and writing sit near 0.69--0.72. Median response length on reasoning items is 118, 55, 34, and 100 words for Bard, Falcon, GPT-4, and Llama. GPT-4's reasoning answers are much shorter than everyone else's, so part of that domain's accuracy is a length cue. Writing medians are 355, 93, 352, and 334: Falcon is short everywhere, and the other three are long together, which is why writing is harder than the headline accuracy suggests.
+The same CNN is not equally good on every task, even when every task was in training. Average $F$ by task is code 0.743, QA 0.715, reasoning 0.844, and writing 0.661. The LSTM follows the same order at a lower level: 0.515, 0.552, 0.720, and 0.555. Reasoning is easy. On reasoning items the median lengths are 118, 55, 34, and 100 words for Bard, Falcon, GPT-4, and Llama. GPT-4 is much shorter there, so length is part of that score. Writing is the hard task. I use that in RQ3.
 
-\begin{table}[H]
-\centering
-\caption{Output-only macro-F1 by domain on the mixed-domain test split (the classifier was trained on all four domains).}
-\label{tab:bydomain}
-\begin{tabular}{lcc}
-\toprule
-Domain & CNN & BiLSTM \\
-\midrule
-Code & 0.689 & 0.698 \\
-QA & 0.720 & 0.699 \\
-Reasoning & 0.840 & 0.800 \\
-Writing & 0.690 & 0.683 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{RQ2: does the prompt help?}
+\section{RQ2: does the instruction help?}
 \label{sec:rq2}
 
-It does not. Figure~\ref{fig:rq2} and Table~\ref{tab:rq2} compare the three views. Input-only accuracy is 0.252 for the CNN, 0.273 for the BiLSTM, and 0.260 for TF-IDF. A binomial standard error around chance (0.25) on 1,590 test rows is about 0.011, so the CNN and TF-IDF results sit on the chance line and the RNN's 0.273 is only a small step above it. CNN input macro-F1 (0.218) is below 0.25 because the mistakes are uneven across classes; accuracy is the cleaner summary for this view.
+No. Table~\ref{tab:rq2} and Figure~\ref{fig:rq2} compare the three views. ``Both'' is the Chapter 7 concatenation: instruction, then response.
 
 \begin{table}[H]
 \centering
-\caption{RQ2 test macro-F1 by view. Output-only repeats Table~\ref{tab:rq1}.}
+\caption{RQ2 test scores. Accuracy is on the left of each pair and average $F$ is on the right.}
 \label{tab:rq2}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-View & CNN & BiLSTM & TF-IDF LR \\
+View & CNN & LSTM & Log.\ reg. & Naive Bayes \\
 \midrule
-Input only & 0.218 & 0.271 & 0.260 \\
-Output only & 0.736 & 0.723 & 0.761 \\
-Input + output & 0.727 & 0.558 & 0.705 \\
+Instruction only & 0.265 / 0.231 & 0.254 / 0.253 & 0.255 / 0.255 & 0.250 / 0.231 \\
+Response only & 0.745 / 0.745 & 0.590 / 0.588 & 0.731 / 0.732 & 0.563 / 0.560 \\
+Both & 0.733 / 0.733 & 0.578 / 0.579 & 0.648 / 0.649 & 0.469 / 0.465 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.88\textwidth]{../results/figures/rq2_views.png}
-\caption{Macro-F1 for input only, output only, and both. The dashed line is chance.}
+\includegraphics[width=0.92\textwidth]{../results/figures/rq2_views.png}
+\caption{Average $F$ for the instruction, the response, and both. The dashed line is chance for a balanced four-way $F$.}
 \label{fig:rq2}
 \end{figure}
 
-Concatenating the prompt does not improve any model. The CNN drops from 0.736 to 0.727. TF-IDF drops from 0.761 to 0.705. The BiLSTM drops from 0.723 to 0.558. For the bag-of-ngrams model the comparison is the clean one: the prompt adds features and the linear classifier still gets worse, so those features are noise relative to the response. The BiLSTM drop is larger. Two extra facts about that run: the combined view gives the response only 87 tokens, and at epoch 6 the validation macro-F1 is still only 0.563 while training loss is 0.76 (the output-only RNN had already reached a training loss of 0.40). The small LSTM did not finish fitting the longer sequence. I treat the TF-IDF and CNN gaps as the evidence that the prompt does not help, and the RNN gap as that fact plus a capacity limit.
+Instruction-only accuracy sits on 0.25. The CNN's 0.265 is only a small step above it. A rough standard error for a 0.25 coin on 1,590 rows is about 0.011, so 0.265 is a bit high and the others are not. The logistic regression fit on the instruction did not converge in 500 steps. I tried 2,000 steps later. It still had not converged, and the accuracy was 0.264. I would not read that as a real signal.
 
-\subsection{Why input-only could have worked, and why it does not here}
+Adding the instruction to the response makes every model worse. The CNN goes from 0.745 to 0.733. Logistic regression goes from 0.731 to 0.648. Naive Bayes goes from 0.563 to 0.469. The LSTM barely moves (0.590 to 0.578). The logistic regression drop is the clean one. Those instruction words are extra features, and the weights do not find a use for them.
 
-The assignment's warning is right in general. If users pick a model, or if a model was online only during some weeks, the prompt distribution becomes a fingerprint of the deployment. I could see a concrete version of that artifact in the raw UltraFeedback files before any training: Bard has zero completions on three FLAN subsets (17,939 prompts) whose instructions use a stock template. Keeping those rows would have let an input-only classifier reject Bard whenever it saw the template, and it would have shifted Bard's output-length distribution because those templates elicit short answers. They were removed before the split.
+\subsection{Why the instruction could have worked}
 
-After that filter, model assignment on the remaining sources is close to random, and each model is forced to the same domain counts. The prompt then carries almost no label information. The small RNN lift (accuracy 0.273) is about what I would expect from a residual mismatch: downsampling is done per model, so the four models do not answer the exact same prompt set. It is not evidence that the user's wording identifies the model.
+If users pick a model, or if a model was only online for part of the data collection, the instructions are not the same distribution for every label. Then the instruction predicts the model even before you see the answer. I could see a version of that in the raw files. The three FLAN subsets that Bard never answered have a stock template. Keeping them would have made the instruction useful. I removed them. After that, and after forcing each model to the same task counts, the instruction is almost useless.
 
-The practical conclusion is narrow and useful. On this dataset the identifiable signal is in the response. A high input-only score would have meant the split was leaking the label through the prompt, and I would not have trusted the RQ1 number.
+There is still a small leftover. I downsampled each model separately, so the four models do not answer the exact same prompt set. That can create a tiny instruction-only lift. It is not ``the user's wording identifies the model.''
 
-\section{RQ3: cross-domain generalization}
+The useful signal is in the response. Chapter 7 and Chapter 8 say why that should be true. Instruction tuning and RLHF push each model toward a house style: how it starts, how long it goes, whether it hedges or itemizes. The instruction in this dataset was assigned across models. The style was not.
+
+\section{RQ3: a task the model has not seen}
 \label{sec:rq3}
 
-Two held-out settings were trained from scratch on output text. In the first, train and validation contain code, QA, and reasoning, and the cross test is the writing portion of the original test split (357 rows). The in-domain comparison is the other 1,233 test rows, scored with the same checkpoint. In the second, code is held out (406 cross-domain test rows, 1,184 in-domain). Figure~\ref{fig:rq3} shows the macro-F1 drop.
+I used the Chapter 6 setup. Source tasks $S$ are in training and validation. Target task $T$ is held out. I did this twice. First $T$ is writing (357 test rows) and $S$ is code, QA, and reasoning (1,233 in-domain test rows). Then $T$ is code (406 test rows) and $S$ is everything else (1,184 in-domain test rows). The in-domain number and the cross-task number come from the same checkpoint.
 
 \begin{table}[H]
 \centering
-\caption{RQ3 macro-F1. ``In-domain'' is the original test split with the held-out domain removed. The drop is in-domain minus cross-domain.}
+\caption{RQ3 average $F$. The drop is the in-domain score minus the score on the held-out task.}
 \label{tab:rq3}
 \begin{tabular}{llccc}
 \toprule
-Held out & Model & In-domain & Cross-domain & Drop \\
+Held out & Model & In-domain & Held-out task & Drop \\
 \midrule
-Writing & CNN & 0.733 & 0.613 & 0.120 \\
-Writing & BiLSTM & 0.714 & 0.637 & 0.077 \\
-Code & CNN & 0.749 & 0.644 & 0.105 \\
-Code & BiLSTM & 0.716 & 0.667 & 0.049 \\
+Writing & CNN & 0.766 & 0.623 & 0.142 \\
+Writing & LSTM & 0.577 & 0.510 & 0.067 \\
+Code & CNN & 0.731 & 0.655 & 0.076 \\
+Code & LSTM & 0.602 & 0.447 & 0.155 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -332,66 +331,65 @@ Code & BiLSTM & 0.716 & 0.667 & 0.049 \\
 \includegraphics[width=0.48\textwidth]{../results/figures/rq3_writing.png}
 \hfill
 \includegraphics[width=0.48\textwidth]{../results/figures/rq3_code.png}
-\caption{Macro-F1 when writing (left) or code (right) is absent from training.}
+\caption{Average $F$ when writing (left) or code (right) is left out of training.}
 \label{fig:rq3}
 \end{figure}
 
-Performance falls, and it stays well above 0.25. A classifier that had only learned ``this domain's template,'' with no model signal inside the domain, would land near chance on a domain it had never seen. The observed cross-domain macro-F1 (0.61 to 0.67) means a transferable fingerprint exists. The drop (0.05 to 0.12) means some of the in-domain accuracy was task-specific.
+The score drops, and it stays above 0.25. If the classifier had only memorized ``what this task looks like'' and had learned nothing about the model, the held-out task would be near chance. It is not. Some of the signal transfers. The drop means some of the in-domain score was about the task.
 
-Recall by model says the fingerprint is not equally stable (Table~\ref{tab:rq3recall}).
+Recall by model shows that the transfer is uneven (Table~\ref{tab:rq3recall}).
 
 \begin{table}[H]
 \centering
-\caption{Recall by model, in-domain versus the held-out domain.}
+\caption{Recall by model, on the in-domain test rows and on the held-out task.}
 \label{tab:rq3recall}
 \small
 \begin{tabular}{llcccc}
 \toprule
-Setting & Model & Bard & Falcon & GPT-4 & Llama \\
+Setting & & Bard & Falcon & GPT-4 & Llama \\
 \midrule
-Writing, CNN in-domain & recall & 0.848 & 0.654 & 0.697 & 0.745 \\
-Writing, CNN cross & recall & 0.778 & 0.716 & 0.548 & 0.430 \\
-Writing, RNN in-domain & recall & 0.814 & 0.679 & 0.676 & 0.697 \\
-Writing, RNN cross & recall & 0.789 & 0.693 & 0.591 & 0.488 \\
+Writing, CNN & in-domain & 0.831 & 0.689 & 0.792 & 0.760 \\
+Writing, CNN & held out & 0.722 & 0.682 & 0.581 & 0.512 \\
+Writing, LSTM & in-domain & 0.658 & 0.561 & 0.613 & 0.489 \\
+Writing, LSTM & held out & 0.767 & 0.477 & 0.538 & 0.302 \\
 \midrule
-Code, CNN in-domain & recall & 0.775 & 0.748 & 0.771 & 0.704 \\
-Code, CNN cross & recall & 0.531 & 0.660 & 0.716 & 0.648 \\
-Code, RNN in-domain & recall & 0.734 & 0.696 & 0.720 & 0.717 \\
-Code, RNN cross & recall & 0.625 & 0.641 & 0.706 & 0.686 \\
+Code, CNN & in-domain & 0.789 & 0.680 & 0.829 & 0.640 \\
+Code, CNN & held out & 0.635 & 0.641 & 0.745 & 0.591 \\
+Code, LSTM & in-domain & 0.671 & 0.552 & 0.586 & 0.592 \\
+Code, LSTM & held out & 0.302 & 0.573 & 0.480 & 0.438 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-When the test domain is writing, Llama's CNN recall falls from 0.745 to 0.430 and GPT-4's from 0.697 to 0.548. Bard stays high (0.848 to 0.778) and Falcon does not drop. Llama's writing style is not the style the CNN learned from code, QA, and reasoning. When the test domain is code, the fragile model is Bard: CNN recall falls from 0.775 to 0.531, while GPT-4 barely moves (0.771 to 0.716). Falcon is the most consistent model in both directions. Its responses are short in every domain (median under 100 words; see Section~\ref{sec:rq4}), so the length cue it offers is available whether or not the classifier has seen the task.
+When the held-out task is writing, Llama's CNN recall falls from 0.760 to 0.512, and GPT-4's falls from 0.792 to 0.581. Falcon does not really move. The LSTM's Llama recall falls from 0.489 to 0.302. When the held-out task is code, the CNN drop is smaller, and the model that loses the most CNN recall is Bard (0.789 to 0.635). The LSTM's Bard recall falls hard, from 0.671 to 0.302. I would not over-read the smaller gaps. A few hundred test rows make a recall number noisy. The Llama writing drop and the LSTM's Bard code drop are large enough that I believe them.
 
-I read this as a mixture. Part of the decision is a general habit (how long the answer is, whether it itemizes, which function words it likes). Part of it is a habit that shows up only on some tasks (how Llama writes an essay, how Bard writes code). The cross-domain drop is the second part.
+This matches the lecture's warning. Chapter 6 says supervision from $S$ may not fit $T$. Chapter 7 says a mismatch between train and test instructions hurts. Here the mismatch is the task, not the wording of a system prompt, but the effect is the same kind of thing. Falcon is the stable one in the CNN, and Falcon is short in every task (Section~\ref{sec:rq4}). A length cue does not care which task you held out. Llama's essay style does.
 
-\section{RQ4: which signals are doing the work?}
+\section{RQ4: what the models are doing differently}
 \label{sec:rq4}
 
-\subsection{Surface measurements}
+Chapter 8's story is that RLHF, after instruction tuning, pushes a model toward answers humans prefer. Those answers pick up habits: longer or shorter, more hedging, more lists, more ``happy to help.'' Chapter 7 says the instruction itself changes how a model behaves, and that models do not all follow the same instruction equally. UltraFeedback adds one more instruction on top, the random principle prompt. So some of what I measure is the base model, and some of it is how that model reacted to the same extra instruction.
 
-Figure~\ref{fig:feats} and Table~\ref{tab:feats} describe the responses the classifiers see. Word counts use a letter-word regex on the stored response. Type-token ratio is computed on the first 50 words, and only when the response has at least 50 words (about 17\% of rows are shorter, almost all of them Falcon or reasoning items, and they are omitted from the TTR mean). That fixed window matters: a raw type-token ratio is higher for short texts and would have made Falcon look more ``diverse'' for a purely mechanical reason.
+\subsection{Counts I can see without a classifier}
+
+Figure~\ref{fig:feats} and Table~\ref{tab:feats} describe the responses. Word counts use a letter-word pattern. For type-token ratio I use the first 50 words, and only if the response has 50 words. About 17\% of rows are shorter. A raw type-token ratio is higher for short texts, so it would have made Falcon look more varied for a boring reason.
 
 \begin{table}[H]
 \centering
-\caption{Mean surface statistics by model.}
+\caption{Mean surface counts by model. Medians for length are in the text.}
 \label{tab:feats}
 \small
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrr}
 \toprule
 Statistic & Bard & Falcon & GPT-4 & Llama \\
 \midrule
 Words (mean) & 260.1 & 117.8 & 230.1 & 268.8 \\
-Words (median) & 230 & 76 & 202 & 231 \\
 TTR, first 50 words & 0.715 & 0.761 & 0.770 & 0.757 \\
 Punctuation per word & 0.190 & 0.170 & 0.231 & 0.200 \\
 Code fences & 0.324 & 0.115 & 0.504 & 0.279 \\
-Bold markers (\texttt{**}) & 2.31 & 0.07 & 0.30 & 0.09 \\
+Bold markers & 2.31 & 0.07 & 0.30 & 0.09 \\
 Bullet lines & 2.85 & 1.07 & 3.08 & 3.00 \\
-Markdown hits & 5.77 & 1.37 & 4.08 & 3.56 \\
 Exclamation marks & 0.24 & 0.25 & 0.38 & 0.86 \\
-Average word length & 4.65 & 4.88 & 5.10 & 4.90 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -399,45 +397,63 @@ Average word length & 4.65 & 4.88 & 5.10 & 4.90 \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{../results/figures/rq4_features.png}
-\caption{Length separates Falcon. Type-token ratio on a fixed 50-word prefix does not. Markdown and punctuation differ in the means; the boxes show that many responses from every model have none.}
+\caption{Length separates Falcon. Type-token ratio on 50 words does not. Many responses from every model have no markdown.}
 \label{fig:feats}
 \end{figure}
 
-Four differences are large enough to matter:
+Falcon's median length is 76 words. The others are 230 (Bard), 202 (GPT-4), and 231 (Llama). That is the biggest structural gap. Type-token ratio on a fixed window does not separate them. The means sit between 0.715 and 0.770.
+
+A few phrases show up at very different rates. I counted them on the full balanced set:
 
 \begin{itemize}
-\item \textbf{Length.} Falcon's median is 76 words. The other three medians are 202--231. This is the most obvious structural cue, and it is present inside code, QA, reasoning, and writing, not only in the aggregate.
-\item \textbf{Markdown.} Bard averages 2.31 bold markers per response; Falcon averages 0.07 and Llama 0.09. GPT-4 averages 0.504 code fences, against 0.115 for Falcon. Bullet lines are common for Bard, GPT-4, and Llama (about 3) and rarer for Falcon (1.07).
-\item \textbf{Punctuation.} GPT-4 uses more punctuation per word (0.231) than Falcon (0.170).
-\item \textbf{Lexical diversity is not a separator.} Means of the 50-word TTR sit between 0.715 and 0.770. The boxes overlap almost completely.
+\item ``I'd be happy'' appears in 15.6\% of Llama responses and in under 1\% of Bard and Falcon responses.
+\item ``here's'' appears in 25.0\% of Llama responses and 17.8\% of GPT-4 responses, but only 1.6\% of Bard responses.
+\item ``sure,'' appears in 23.5\% of Llama responses and 16.2\% of Bard responses, and in 3.6\% of Falcon responses.
+\item ``as an AI'' appears in 8.8\% of Falcon responses and rarely for the others.
+\item A pattern like ``80\% confidence'' appears in about 25\% of GPT-4 and Llama responses, 7.3\% of Bard, and 4.0\% of Falcon. UltraFeedback sometimes asks the model to state a confidence. GPT-4 and Llama do it. Falcon and Bard mostly do not. That is the Chapter 7 point: the same extra instruction does not land the same way on every model.
 \end{itemize}
 
-A reader can see the same habits in single examples. One GPT-4 writing answer opens with a formal email header (``Subject: Apology for Delay in Service Delivery''). One Llama answer opens with ``Sure, I'd be happy to help'' and then prints guitar chords. One Bard dialogue is formatted as a screenplay (``INT.\ COFFEE SHOP - DAY''). One Falcon answer to a haiku prompt ignores the form and writes a plain paragraph that names the year 1848 and the materials. Those are individual rows, not the averages, but they match the averages: GPT-4 and Bard spend formatting budget, Llama is long and accommodating, Falcon is shorter and plainer.
+\subsection{Logistic regression weights}
 
-\subsection{Ablations}
-
-Each ablation retrains both networks on the transformed response. The test set is transformed the same way.
+Chapter 1 says the weight is the importance of the feature. On the output-only logistic regression, the largest positive weights for each class are:
 
 \begin{itemize}
-\item \textbf{Strip markdown.} Fences, inline code, headers, emphasis, and bullet markers are removed. The words inside them stay.
-\item \textbf{Fixed length.} Every response is forced to exactly 60 words, by truncation or by repeating the text. Padding length can no longer encode the class.
-\item \textbf{Strip punctuation.} Punctuation is deleted and the text is lowercased again (the tokenizer already lowercases).
-\item \textbf{All three.} Markdown, then punctuation, then the 60-word constraint.
+\item Bard: here, main, following, sure, variety, able.
+\item Falcon: assistant (weight 13.9, the largest single weight I saw), primes, response, correct, sorry, therefore.
+\item GPT-4: 95, various, remember, now, confidence, another.
+\item Llama: happy, I'd, here's, 80, confidence, therefore, let's.
+\end{itemize}
+
+Those line up with the phrase counts. Llama is ``I'd be happy'' and ``here's'' and ``let's.'' Bard is ``sure.'' Falcon is ``assistant'' and ``sorry.'' The tokens 95, 80, and confidence match the confidence-score habit. I do not think ``primes'' is a deep style fact. It is probably one repeated answer. Weights can lock onto a rare word. That is a limit of reading importance off a single fit.
+
+\subsection{K-means, from Chapter 2}
+
+I also clustered the test-set word counts with K-means, $K = 4$, without using the labels. Normalized mutual information against the true model is 0.054. Purity is 0.355. A useless clustering of a balanced four-class problem has purity 0.25, so this is only a little better than chance. The responses do not fall into four blobs in word-count space. The supervised logistic regression still works, because it can lean on a handful of high-weight words. Unsupervised distance does not find the same split. I take that as a warning against saying the four models live in four obvious regions of bag-of-words space.
+
+\subsection{Deleting signals and retraining}
+
+I retrained the CNN and the LSTM after changing the response.
+
+\begin{itemize}
+\item \textbf{Strip markdown.} Fences, inline code, headers, emphasis, and bullets are removed. The words stay.
+\item \textbf{Fixed length.} Every response becomes exactly 60 words, by cutting or by repeating. Length can no longer separate the classes.
+\item \textbf{Strip punctuation.} Punctuation is deleted. The tokenizer already lowercases.
+\item \textbf{All three.} Markdown, then punctuation, then the 60-word rule.
 \end{itemize}
 
 \begin{table}[H]
 \centering
-\caption{RQ4 ablation macro-F1 on the same test prompts. The drop is measured from that architecture's original output-only score.}
+\caption{RQ4 average $F$ after each change. The drop is from that model's original output-only score.}
 \label{tab:ablate}
 \begin{tabular}{lcccc}
 \toprule
-Condition & CNN & CNN drop & BiLSTM & BiLSTM drop \\
+Condition & CNN & CNN drop & LSTM & LSTM drop \\
 \midrule
-Original & 0.736 & --- & 0.723 & --- \\
-Strip markdown & 0.738 & $-0.002$ & 0.714 & 0.009 \\
-Fixed length (60 words) & 0.713 & 0.023 & 0.684 & 0.039 \\
-Strip punctuation & 0.712 & 0.024 & 0.692 & 0.031 \\
-All three & 0.684 & 0.052 & 0.656 & 0.067 \\
+Original & 0.745 & --- & 0.588 & --- \\
+Strip markdown & 0.741 & 0.004 & 0.596 & $-0.008$ \\
+Fixed length (60 words) & 0.715 & 0.030 & 0.602 & $-0.014$ \\
+Strip punctuation & 0.724 & 0.021 & 0.518 & 0.070 \\
+All three & 0.680 & 0.065 & 0.555 & 0.033 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -445,33 +461,37 @@ All three & 0.684 & 0.052 & 0.656 & 0.067 \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.88\textwidth]{../results/figures/rq4_ablations.png}
-\caption{Output-only macro-F1 after each ablation.}
+\caption{Output-only average $F$ after each ablation.}
 \label{fig:ablate}
 \end{figure}
 
-Stripping markdown does not hurt the CNN (0.738 versus 0.736) and costs the RNN about 0.009. The marker characters were available as tokens, but the words that sat next to them were enough. Forcing a common length costs 0.023 (CNN) and 0.039 (RNN). Removing punctuation costs 0.024 and 0.031. Doing all three costs 0.052 and 0.067. The remaining macro-F1, 0.684 for the CNN and 0.656 for the RNN, is still far above 0.25.
+Markdown markers are not the CNN's main cue. Removing them costs 0.004. Forcing a common length costs the CNN 0.030. Removing punctuation costs 0.021. All three together cost 0.065, and average $F$ is still 0.680. Word choice is doing real work. That fits the logistic regression result. A linear model on counts, which barely sees order, already scores 0.732.
 
-So the classifier is using structural cues, and it is also using lexical ones. Length and punctuation are real, and they are not sufficient to explain the result. After they are gone, word choice still separates the four models. That lines up with TF-IDF beating the neural nets in RQ1: a linear model over word and bigram counts, which only weakly represents order and does not represent raw length except through how many n-grams fire, is already a strong fingerprint detector on this collection.
+The LSTM does not use length the way I expected. The 60-word version is slightly better (0.602 versus 0.588). I think a fixed length makes $h_T$ easier, because every example ends after the same number of words. Punctuation matters more for the LSTM. Stripping it drops average $F$ from 0.588 to 0.518. The gates can treat a punctuation mark as a step. When those steps disappear, the final state is less informative.
 
-\section{Lessons and experience}
+One training problem: on the markdown ablation, the CNN's training loss jumped into the hundreds of thousands. Chapter 9 warns that a bad step size makes gradient descent unstable. I did not clip the gradient, because we did not cover that. I still kept the epoch with the best validation accuracy. That epoch's test average $F$ is the 0.741 in the table. I would not trust the loss curve from that run. I do trust the selected checkpoint more than a diverged one, and the score is close to the original CNN.
+
+\section{Lessons}
 \label{sec:lessons}
 
-The result I trust most is the pair of negative controls. Output-only macro-F1 is about 0.73. Input-only accuracy is about 0.25 once the Bard/FLAN availability hole is closed. If those two numbers had been similar, I would have been measuring the dataset's sampling scheme. Closing that hole before training, and then watching input-only fall to chance, is what makes the output-only number believable.
+The result I trust most is the pair of checks. Response-only CNN accuracy is 0.745. Instruction-only accuracy is about 0.25 after I closed the Bard/FLAN hole. If those two numbers had been close, I would have been measuring the sampling scheme. Chapter 1's train/test split does not save you from that. The label can leak through $x$.
 
-The second lesson is that ``an LLM fingerprint'' is too coarse. Falcon is identifiable in part because it is short in every domain, and that cue survives a domain shift. Llama's writing and Bard's code do not match what the classifier learned on the other tasks, and recall for those cells falls hard. A detector that will be applied to a new kind of writing needs the cross-domain number, not the mixed-test number.
+The second lesson is the CNN versus the LSTM, and it matches the Chapter 4 comparison more cleanly than I expected. The CNN sees both sides and only local context, and it wins. The one-direction LSTM sees a long context in theory and, on this data, mostly fails to use it. Reading $h_T$ only, with hidden size 128, was not enough. The bidirectional extra, which the lecture does not teach, got back to 0.717. So the ``one side'' limitation on that slide is not just a slogan. It showed up in the score.
 
-The third lesson is about the models I was required to build. On 7,500 training rows, a TF-IDF logistic regression beat both the CNN and the BiLSTM. I do not think that means neural nets cannot represent style. It means that, at this size, with a 12k word vocabulary and a 128-token cap, most of the signal is lexical and a linear model is a better use of the data. The BiLSTM with hidden size 64 was a CPU compromise. Its training loss on the output-only task fell to 0.40 while validation macro-F1 stalled near 0.73, which is overfitting, and on the concatenated view it never caught up. I would rather report that than widen the network after seeing the test score.
+The third lesson is Chapter 6 and Chapter 7. Holding out writing costs the CNN 0.142 in average $F$. Holding out code costs 0.076. The model is learning something that transfers, and something that does not. Llama's writing and, for the LSTM, Bard's code are the fragile cases. A detector for a new kind of task needs the held-out number.
 
-Several limits should stay attached to the claims. Domain labels are regular expressions over the prompt, so some ``writing'' rows are summaries and some ``reasoning'' rows are entailment questions rather than mathematics. UltraFeedback wrapped every completion in a random principle prompt (helpfulness, honesty, and so on). The classifier never sees that prompt, but the response was generated under it, which blurs model style with a dataset choice. Sequences are lowercased, so capitalization is invisible to the networks; the uppercase ratio in Table~\ref{tab:feats} is descriptive only. The 60-word ablation repeats short answers until they fill 60 words, which is a blunt way to delete length and could itself create a repetition cue. Test sets for a single domain have a few hundred rows, so a recall difference of a few points is noisy; the Llama writing drop and the Bard code drop are large enough that I do not think they are noise.
+I also learned that a linear model from Chapter 1 can beat the LSTM and almost match the CNN. The weights are readable. ``Happy,'' ``here's,'' ``assistant,'' and ``sure'' are the kind of habit Chapter 8 is about. K-means on the same counts does not recover the four models (NMI 0.054). Supervision is doing the work. The four models are not an obvious cluster.
 
-What I would do next, with more compute, is keep the same prompt-level split and replace the word CNN with a small pretrained encoder, still frozen or lightly fine-tuned, and check whether the cross-domain drop shrinks. If it shrinks, the missing piece was long-range wording. If it does not, the task-specific habits are real properties of the generators.
+Things I would not hide. The task labels are regular expressions. The principle prompts in UltraFeedback blur model style with a dataset choice, and the confidence-score gap is an example. The 60-word ablation repeats short answers, which is a crude way to delete length. The markdown CNN loss exploded. The LSTM test accuracy was lower than its validation accuracy. Domain test sets have a few hundred rows.
 
-\section{Allowed use of LLM tools}
+If I had more time I would try a smaller learning rate for the CNN, and I would look up gradient clipping, because that one loss curve was not acceptable. I would not switch the main LSTM to bidirectional just to get a higher score. The lecture model is the one-direction one, and the gap is part of the result.
+
+\section{LLM tools}
 \label{sec:llmuse}
 
-An LLM coding assistant was used to help implement the pipeline, debug training, and draft this report. Every accuracy, F1, confusion count, and feature mean quoted above was produced by running that code and was copied from \texttt{results/metrics.json} or from the feature table computed on \texttt{data/processed/samples.csv.gz}. I am responsible for understanding the dataset, the models, the split, and the claims in this write-up before submitting.
+An LLM coding assistant helped me write the code, debug training, and draft this report. The accuracies, $F$ scores, count tables, weights, and phrase rates were produced by running that code. They were copied from \texttt{results/metrics.json} or counted on \texttt{data/processed/samples.csv.gz}. I am responsible for understanding the dataset, the models, the split, and the claims in this write-up before I submit.
 
-\section{How to reproduce}
+\section{How to rerun}
 \label{sec:repro}
 
 From the repository root, with the packages in \texttt{requirements.txt}:
@@ -482,18 +502,13 @@ python -m src.run_all
 cd report && pdflatex report.tex
 \end{verbatim}
 
-\texttt{prepare\_data} downloads UltraFeedback only if \texttt{data/raw/ultrafeedback/} is empty. The processed file used for the numbers in this report is already in the repository. \texttt{run\_all} retrains every row of Tables~\ref{tab:rq1}--\ref{tab:ablate} at seed 42 on CPU. Early stopping and the epoch cap mean a rerun matches these tables when the library versions match; the committed \texttt{results/metrics.json} is the record of the run this report describes.
+\texttt{prepare\_data} downloads UltraFeedback only if the raw files are missing. The processed table used here is already in the repo. \texttt{run\_all} retrains the tables above at seed 42 on CPU. The committed \texttt{results/metrics.json} is the run this report describes.
 
-\bibliographystyle{plain}
 \begin{thebibliography}{1}
 \bibitem{cui2023ultrafeedback}
 Ganqu Cui, Lifan Yuan, Ning Ding, Guanming Yao, Wei Zhu, Yuan Ni, Guotong Xie, Zhiyuan Liu, and Maosong Sun.
 UltraFeedback: Boosting language models with high-quality feedback.
 arXiv:2310.01377, 2023.
-\bibitem{kim2014cnn}
-Yoon Kim.
-Convolutional neural networks for sentence classification.
-EMNLP, 2014.
 \end{thebibliography}
 
 \end{document}

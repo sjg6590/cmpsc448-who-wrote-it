@@ -48,18 +48,18 @@ def training_curves(histories: dict[str, list[dict]], path: Path) -> None:
     axes[0].set_title("Training loss")
     axes[0].set_xlabel("Epoch")
     axes[0].set_ylabel("Cross-entropy")
-    axes[1].set_title("Validation macro-F1")
+    axes[1].set_title("Validation average F")
     axes[1].set_xlabel("Epoch")
-    axes[1].set_ylabel("Macro-F1")
+    axes[1].set_ylabel("Average F")
     axes[1].set_ylim(0, 1)
     axes[0].legend()
     axes[1].legend()
     _save(fig, path)
 
 
-def grouped_bars(rows: list[dict], title: str, path: Path, ylabel: str = "Macro-F1") -> None:
+def grouped_bars(rows: list[dict], title: str, path: Path, ylabel: str = "Average F") -> None:
     frame = pd.DataFrame(rows)
-    fig, ax = plt.subplots(figsize=(8.2, 4.2))
+    fig, ax = plt.subplots(figsize=(8.8, 4.4))
     sns.barplot(data=frame, x="setting", y="score", hue="model", ax=ax)
     ax.set_ylim(0, 1)
     ax.set_ylabel(ylabel)

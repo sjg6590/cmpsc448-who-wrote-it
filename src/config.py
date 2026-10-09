@@ -62,16 +62,19 @@ MIN_FREQ = 2
 
 EMBED_DIM = 128
 CNN_FILTERS = 96
-CNN_KERNELS = (3, 4, 5)
-CNN_DROPOUT = 0.5
-RNN_HIDDEN = 64
-RNN_DROPOUT = 0.3
+# Chapter 4's 1D example uses one filter width, 3, with zero padding.
+CNN_KERNEL = 3
+RNN_HIDDEN = 128
 
 BATCH_SIZE = 64
+# alpha_t in Chapter 9. Adam is the optimizer the lecture recommends.
 LR = 1e-3
-WEIGHT_DECAY = 1e-5
-MAX_EPOCHS = 6
-PATIENCE = 2
-GRAD_CLIP = 1.0
+MAX_EPOCHS = 12
+# Stop if validation accuracy does not improve. Chapter 9 says to read that curve.
+# The LSTM was still improving at epoch 6, so the cap is 12 rather than 6.
+PATIENCE = 3
 
-TFIDF_MAX_FEATURES = 20000
+# Word-count features for Naive Bayes and logistic regression (Chapter 1).
+COUNT_MAX_FEATURES = 12000
+# MAP smoothing: m virtual counts. Chapter 1 uses m to fix zero counts.
+NB_M = 1.0
