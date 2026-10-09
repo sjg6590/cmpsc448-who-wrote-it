@@ -1,0 +1,8439 @@
+{
+  "seed": 42,
+  "n_rows": 10668,
+  "split_counts": {
+    "bard": {
+      "test": 385,
+      "train": 1884,
+      "val": 398
+    },
+    "falcon-40b-instruct": {
+      "test": 409,
+      "train": 1884,
+      "val": 374
+    },
+    "gpt-4": {
+      "test": 377,
+      "train": 1877,
+      "val": 413
+    },
+    "llama-2-70b-chat": {
+      "test": 419,
+      "train": 1837,
+      "val": 411
+    }
+  },
+  "domain_counts": {
+    "bard": {
+      "code": 676,
+      "qa": 700,
+      "reasoning": 664,
+      "writing": 627
+    },
+    "falcon-40b-instruct": {
+      "code": 676,
+      "qa": 700,
+      "reasoning": 664,
+      "writing": 627
+    },
+    "gpt-4": {
+      "code": 676,
+      "qa": 700,
+      "reasoning": 664,
+      "writing": 627
+    },
+    "llama-2-70b-chat": {
+      "code": 676,
+      "qa": 700,
+      "reasoning": 664,
+      "writing": 627
+    }
+  },
+  "neural": {
+    "cnn_output": {
+      "accuracy": 0.7447,
+      "macro_f1": 0.7451,
+      "per_class": {
+        "bard": {
+          "precision": 0.7405,
+          "recall": 0.8078,
+          "f1": 0.7727,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.8,
+          "recall": 0.6944,
+          "f1": 0.7435,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6446,
+          "recall": 0.7745,
+          "f1": 0.7036,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.8204,
+          "recall": 0.7088,
+          "f1": 0.7606,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          311,
+          29,
+          29,
+          16
+        ],
+        [
+          41,
+          284,
+          57,
+          27
+        ],
+        [
+          34,
+          29,
+          292,
+          22
+        ],
+        [
+          34,
+          13,
+          75,
+          297
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.7389,
+          "macro_f1": 0.7428,
+          "per_class": {
+            "bard": {
+              "precision": 0.7404,
+              "recall": 0.8021,
+              "f1": 0.77,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8434,
+              "recall": 0.6796,
+              "f1": 0.7527,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.5878,
+              "recall": 0.7549,
+              "f1": 0.6609,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8636,
+              "recall": 0.7238,
+              "f1": 0.7876,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              77,
+              7,
+              9,
+              3
+            ],
+            [
+              8,
+              70,
+              22,
+              3
+            ],
+            [
+              15,
+              4,
+              77,
+              6
+            ],
+            [
+              4,
+              2,
+              23,
+              76
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.7173,
+          "macro_f1": 0.715,
+          "per_class": {
+            "bard": {
+              "precision": 0.7059,
+              "recall": 0.8182,
+              "f1": 0.7579,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7757,
+              "recall": 0.6917,
+              "f1": 0.7313,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.5619,
+              "recall": 0.6413,
+              "f1": 0.599,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8224,
+              "recall": 0.7273,
+              "f1": 0.7719,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              72,
+              8,
+              6,
+              2
+            ],
+            [
+              8,
+              83,
+              20,
+              9
+            ],
+            [
+              13,
+              12,
+              59,
+              8
+            ],
+            [
+              9,
+              4,
+              20,
+              88
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8448,
+          "macro_f1": 0.8438,
+          "per_class": {
+            "bard": {
+              "precision": 0.844,
+              "recall": 0.8288,
+              "f1": 0.8364,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8902,
+              "recall": 0.7449,
+              "f1": 0.8111,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.8,
+              "recall": 0.9333,
+              "f1": 0.8615,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8545,
+              "recall": 0.8785,
+              "f1": 0.8664,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              92,
+              6,
+              6,
+              7
+            ],
+            [
+              11,
+              73,
+              7,
+              7
+            ],
+            [
+              2,
+              2,
+              84,
+              2
+            ],
+            [
+              4,
+              1,
+              8,
+              94
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6695,
+          "macro_f1": 0.6611,
+          "per_class": {
+            "bard": {
+              "precision": 0.6667,
+              "recall": 0.7778,
+              "f1": 0.7179,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6988,
+              "recall": 0.6591,
+              "f1": 0.6784,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.6429,
+              "recall": 0.7742,
+              "f1": 0.7024,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6842,
+              "recall": 0.4535,
+              "f1": 0.5455,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              70,
+              8,
+              8,
+              4
+            ],
+            [
+              14,
+              58,
+              8,
+              8
+            ],
+            [
+              4,
+              11,
+              72,
+              6
+            ],
+            [
+              17,
+              6,
+              24,
+              39
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.0683,
+          "val_accuracy": 0.6435,
+          "val_macro_f1": 0.6422,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7213,
+          "val_accuracy": 0.7099,
+          "val_macro_f1": 0.7084,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.5599,
+          "val_accuracy": 0.7218,
+          "val_macro_f1": 0.7217,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.4362,
+          "val_accuracy": 0.7237,
+          "val_macro_f1": 0.7247,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3225,
+          "val_accuracy": 0.7331,
+          "val_macro_f1": 0.7339,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2325,
+          "val_accuracy": 0.7337,
+          "val_macro_f1": 0.7336,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1597,
+          "val_accuracy": 0.7343,
+          "val_macro_f1": 0.7339,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.107,
+          "val_accuracy": 0.7475,
+          "val_macro_f1": 0.7467,
+          "selected": true
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0704,
+          "val_accuracy": 0.7343,
+          "val_macro_f1": 0.7345,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0482,
+          "val_accuracy": 0.7431,
+          "val_macro_f1": 0.7431,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0344,
+          "val_accuracy": 0.7456,
+          "val_macro_f1": 0.7453,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "output",
+      "tag": "rq_output_cnn"
+    },
+    "lstm_output": {
+      "accuracy": 0.5899,
+      "macro_f1": 0.5881,
+      "per_class": {
+        "bard": {
+          "precision": 0.6383,
+          "recall": 0.7013,
+          "f1": 0.6683,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.611,
+          "recall": 0.599,
+          "f1": 0.6049,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5397,
+          "recall": 0.6313,
+          "f1": 0.5819,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.5692,
+          "recall": 0.4415,
+          "f1": 0.4973,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          270,
+          33,
+          38,
+          44
+        ],
+        [
+          51,
+          245,
+          64,
+          49
+        ],
+        [
+          33,
+          59,
+          238,
+          47
+        ],
+        [
+          69,
+          64,
+          101,
+          185
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.5172,
+          "macro_f1": 0.5151,
+          "per_class": {
+            "bard": {
+              "precision": 0.551,
+              "recall": 0.5625,
+              "f1": 0.5567,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5455,
+              "recall": 0.5825,
+              "f1": 0.5634,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.4394,
+              "recall": 0.5686,
+              "f1": 0.4957,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5758,
+              "recall": 0.3619,
+              "f1": 0.4444,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              54,
+              8,
+              22,
+              12
+            ],
+            [
+              16,
+              60,
+              19,
+              8
+            ],
+            [
+              14,
+              22,
+              58,
+              8
+            ],
+            [
+              14,
+              20,
+              33,
+              38
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.5534,
+          "macro_f1": 0.5515,
+          "per_class": {
+            "bard": {
+              "precision": 0.6289,
+              "recall": 0.6932,
+              "f1": 0.6595,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6124,
+              "recall": 0.6583,
+              "f1": 0.6345,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.3947,
+              "recall": 0.4891,
+              "f1": 0.4369,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5926,
+              "recall": 0.3967,
+              "f1": 0.4752,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              61,
+              7,
+              9,
+              11
+            ],
+            [
+              11,
+              79,
+              23,
+              7
+            ],
+            [
+              6,
+              26,
+              45,
+              15
+            ],
+            [
+              19,
+              17,
+              37,
+              48
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7192,
+          "macro_f1": 0.7196,
+          "per_class": {
+            "bard": {
+              "precision": 0.7521,
+              "recall": 0.7928,
+              "f1": 0.7719,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7403,
+              "recall": 0.5816,
+              "f1": 0.6514,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7979,
+              "recall": 0.8333,
+              "f1": 0.8152,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6102,
+              "recall": 0.6729,
+              "f1": 0.64,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              88,
+              7,
+              2,
+              14
+            ],
+            [
+              11,
+              57,
+              7,
+              23
+            ],
+            [
+              3,
+              3,
+              75,
+              9
+            ],
+            [
+              15,
+              10,
+              10,
+              72
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5686,
+          "macro_f1": 0.5554,
+          "per_class": {
+            "bard": {
+              "precision": 0.6036,
+              "recall": 0.7444,
+              "f1": 0.6667,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5765,
+              "recall": 0.5568,
+              "f1": 0.5665,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5941,
+              "recall": 0.6452,
+              "f1": 0.6186,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.45,
+              "recall": 0.314,
+              "f1": 0.3699,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              67,
+              11,
+              5,
+              7
+            ],
+            [
+              13,
+              49,
+              15,
+              11
+            ],
+            [
+              10,
+              8,
+              60,
+              15
+            ],
+            [
+              21,
+              17,
+              21,
+              27
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.2385,
+          "val_accuracy": 0.4956,
+          "val_macro_f1": 0.4793,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.1117,
+          "val_accuracy": 0.5213,
+          "val_macro_f1": 0.522,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.9917,
+          "val_accuracy": 0.5526,
+          "val_macro_f1": 0.5527,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.8964,
+          "val_accuracy": 0.5783,
+          "val_macro_f1": 0.5787,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7362,
+          "val_accuracy": 0.5721,
+          "val_macro_f1": 0.572,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6305,
+          "val_accuracy": 0.5852,
+          "val_macro_f1": 0.5779,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.4793,
+          "val_accuracy": 0.6234,
+          "val_macro_f1": 0.6221,
+          "selected": true
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.4289,
+          "val_accuracy": 0.6178,
+          "val_macro_f1": 0.6159,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.2709,
+          "val_accuracy": 0.5971,
+          "val_macro_f1": 0.5952,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.1874,
+          "val_accuracy": 0.6065,
+          "val_macro_f1": 0.6069,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "output",
+      "tag": "rq_output_lstm"
+    },
+    "cnn_input": {
+      "accuracy": 0.2654,
+      "macro_f1": 0.2311,
+      "per_class": {
+        "bard": {
+          "precision": 0.2656,
+          "recall": 0.5091,
+          "f1": 0.3491,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.2727,
+          "recall": 0.0293,
+          "f1": 0.053,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.2768,
+          "recall": 0.1989,
+          "f1": 0.2315,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.2588,
+          "recall": 0.3317,
+          "f1": 0.2908,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          196,
+          7,
+          56,
+          126
+        ],
+        [
+          189,
+          12,
+          64,
+          144
+        ],
+        [
+          165,
+          9,
+          75,
+          128
+        ],
+        [
+          188,
+          16,
+          76,
+          139
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.2783,
+          "macro_f1": 0.2336,
+          "per_class": {
+            "bard": {
+              "precision": 0.2798,
+              "recall": 0.5625,
+              "f1": 0.3737,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.2857,
+              "recall": 0.0194,
+              "f1": 0.0364,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.2623,
+              "recall": 0.1569,
+              "f1": 0.1963,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2828,
+              "recall": 0.3905,
+              "f1": 0.328,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              54,
+              0,
+              9,
+              33
+            ],
+            [
+              53,
+              2,
+              14,
+              34
+            ],
+            [
+              46,
+              3,
+              16,
+              37
+            ],
+            [
+              40,
+              2,
+              22,
+              41
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.2613,
+          "macro_f1": 0.2321,
+          "per_class": {
+            "bard": {
+              "precision": 0.2464,
+              "recall": 0.5795,
+              "f1": 0.3458,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.3,
+              "recall": 0.025,
+              "f1": 0.0462,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.3014,
+              "recall": 0.2391,
+              "f1": 0.2667,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2595,
+              "recall": 0.281,
+              "f1": 0.2698,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              51,
+              1,
+              11,
+              25
+            ],
+            [
+              55,
+              3,
+              19,
+              43
+            ],
+            [
+              41,
+              0,
+              22,
+              29
+            ],
+            [
+              60,
+              6,
+              21,
+              34
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.2783,
+          "macro_f1": 0.2482,
+          "per_class": {
+            "bard": {
+              "precision": 0.3067,
+              "recall": 0.4505,
+              "f1": 0.365,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.4286,
+              "recall": 0.0612,
+              "f1": 0.1071,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.2405,
+              "recall": 0.2111,
+              "f1": 0.2249,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2533,
+              "recall": 0.3551,
+              "f1": 0.2957,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              50,
+              2,
+              21,
+              38
+            ],
+            [
+              33,
+              6,
+              21,
+              38
+            ],
+            [
+              33,
+              2,
+              19,
+              36
+            ],
+            [
+              47,
+              4,
+              18,
+              38
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.2409,
+          "macro_f1": 0.2079,
+          "per_class": {
+            "bard": {
+              "precision": 0.2343,
+              "recall": 0.4556,
+              "f1": 0.3094,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.0769,
+              "recall": 0.0114,
+              "f1": 0.0198,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.3103,
+              "recall": 0.1935,
+              "f1": 0.2384,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2342,
+              "recall": 0.3023,
+              "f1": 0.264,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              41,
+              4,
+              15,
+              30
+            ],
+            [
+              48,
+              1,
+              10,
+              29
+            ],
+            [
+              45,
+              4,
+              18,
+              26
+            ],
+            [
+              41,
+              4,
+              15,
+              26
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.4123,
+          "val_accuracy": 0.2563,
+          "val_macro_f1": 0.2305,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.3248,
+          "val_accuracy": 0.2588,
+          "val_macro_f1": 0.2292,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.2533,
+          "val_accuracy": 0.2607,
+          "val_macro_f1": 0.2231,
+          "selected": true
+        },
+        {
+          "epoch": 4,
+          "train_loss": 1.1703,
+          "val_accuracy": 0.2481,
+          "val_macro_f1": 0.2239,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 1.0686,
+          "val_accuracy": 0.25,
+          "val_macro_f1": 0.2343,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.9604,
+          "val_accuracy": 0.2525,
+          "val_macro_f1": 0.2504,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "input",
+      "tag": "rq_input_cnn"
+    },
+    "lstm_input": {
+      "accuracy": 0.2541,
+      "macro_f1": 0.2531,
+      "per_class": {
+        "bard": {
+          "precision": 0.2595,
+          "recall": 0.2649,
+          "f1": 0.2622,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.2706,
+          "recall": 0.2005,
+          "f1": 0.2303,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.2434,
+          "recall": 0.3183,
+          "f1": 0.2759,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.2494,
+          "recall": 0.2387,
+          "f1": 0.2439,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          102,
+          70,
+          113,
+          100
+        ],
+        [
+          93,
+          82,
+          124,
+          110
+        ],
+        [
+          93,
+          73,
+          120,
+          91
+        ],
+        [
+          105,
+          78,
+          136,
+          100
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.2463,
+          "macro_f1": 0.2429,
+          "per_class": {
+            "bard": {
+              "precision": 0.2708,
+              "recall": 0.2708,
+              "f1": 0.2708,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.1646,
+              "recall": 0.1262,
+              "f1": 0.1429,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.2333,
+              "recall": 0.2745,
+              "f1": 0.2523,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2973,
+              "recall": 0.3143,
+              "f1": 0.3056,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              26,
+              21,
+              29,
+              20
+            ],
+            [
+              20,
+              13,
+              36,
+              34
+            ],
+            [
+              25,
+              25,
+              28,
+              24
+            ],
+            [
+              25,
+              20,
+              27,
+              33
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.266,
+          "macro_f1": 0.2635,
+          "per_class": {
+            "bard": {
+              "precision": 0.2447,
+              "recall": 0.2614,
+              "f1": 0.2527,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.4091,
+              "recall": 0.225,
+              "f1": 0.2903,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.2412,
+              "recall": 0.4457,
+              "f1": 0.313,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2308,
+              "recall": 0.1736,
+              "f1": 0.1981,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              23,
+              10,
+              33,
+              22
+            ],
+            [
+              23,
+              27,
+              40,
+              30
+            ],
+            [
+              22,
+              11,
+              41,
+              18
+            ],
+            [
+              26,
+              18,
+              56,
+              21
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.2562,
+          "macro_f1": 0.2558,
+          "per_class": {
+            "bard": {
+              "precision": 0.3021,
+              "recall": 0.2613,
+              "f1": 0.2802,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.2527,
+              "recall": 0.2347,
+              "f1": 0.2434,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.2069,
+              "recall": 0.2667,
+              "f1": 0.233,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.2718,
+              "recall": 0.2617,
+              "f1": 0.2667,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              29,
+              24,
+              28,
+              30
+            ],
+            [
+              21,
+              23,
+              32,
+              22
+            ],
+            [
+              21,
+              22,
+              24,
+              23
+            ],
+            [
+              25,
+              22,
+              32,
+              28
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.2465,
+          "macro_f1": 0.2467,
+          "per_class": {
+            "bard": {
+              "precision": 0.2243,
+              "recall": 0.2667,
+              "f1": 0.2437,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.2836,
+              "recall": 0.2159,
+              "f1": 0.2452,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.3103,
+              "recall": 0.2903,
+              "f1": 0.3,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.1875,
+              "recall": 0.2093,
+              "f1": 0.1978,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              24,
+              15,
+              23,
+              28
+            ],
+            [
+              29,
+              19,
+              16,
+              24
+            ],
+            [
+              25,
+              15,
+              27,
+              26
+            ],
+            [
+              29,
+              18,
+              21,
+              18
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.3898,
+          "val_accuracy": 0.2538,
+          "val_macro_f1": 0.23,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.3695,
+          "val_accuracy": 0.2556,
+          "val_macro_f1": 0.2539,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.3378,
+          "val_accuracy": 0.2594,
+          "val_macro_f1": 0.2568,
+          "selected": true
+        },
+        {
+          "epoch": 4,
+          "train_loss": 1.273,
+          "val_accuracy": 0.2437,
+          "val_macro_f1": 0.243,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 1.1588,
+          "val_accuracy": 0.24,
+          "val_macro_f1": 0.2389,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 1.0054,
+          "val_accuracy": 0.2481,
+          "val_macro_f1": 0.2478,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "input",
+      "tag": "rq_input_lstm"
+    },
+    "cnn_both": {
+      "accuracy": 0.7333,
+      "macro_f1": 0.7326,
+      "per_class": {
+        "bard": {
+          "precision": 0.6982,
+          "recall": 0.8234,
+          "f1": 0.7557,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7341,
+          "recall": 0.7359,
+          "f1": 0.735,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6905,
+          "recall": 0.6923,
+          "f1": 0.6914,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.8247,
+          "recall": 0.685,
+          "f1": 0.7484,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          317,
+          40,
+          16,
+          12
+        ],
+        [
+          49,
+          301,
+          36,
+          23
+        ],
+        [
+          51,
+          39,
+          261,
+          26
+        ],
+        [
+          37,
+          30,
+          65,
+          287
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.7217,
+          "macro_f1": 0.7218,
+          "per_class": {
+            "bard": {
+              "precision": 0.6695,
+              "recall": 0.8229,
+              "f1": 0.7383,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7212,
+              "recall": 0.7282,
+              "f1": 0.7246,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.6701,
+              "recall": 0.6373,
+              "f1": 0.6533,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8506,
+              "recall": 0.7048,
+              "f1": 0.7708,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              79,
+              13,
+              3,
+              1
+            ],
+            [
+              11,
+              75,
+              11,
+              6
+            ],
+            [
+              22,
+              9,
+              65,
+              6
+            ],
+            [
+              6,
+              7,
+              18,
+              74
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.7055,
+          "macro_f1": 0.6982,
+          "per_class": {
+            "bard": {
+              "precision": 0.6239,
+              "recall": 0.8295,
+              "f1": 0.7122,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7563,
+              "recall": 0.75,
+              "f1": 0.7531,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.6296,
+              "recall": 0.5543,
+              "f1": 0.5896,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7981,
+              "recall": 0.686,
+              "f1": 0.7378,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              73,
+              11,
+              3,
+              1
+            ],
+            [
+              13,
+              90,
+              9,
+              8
+            ],
+            [
+              20,
+              9,
+              51,
+              12
+            ],
+            [
+              11,
+              9,
+              18,
+              83
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8153,
+          "macro_f1": 0.8146,
+          "per_class": {
+            "bard": {
+              "precision": 0.7863,
+              "recall": 0.8288,
+              "f1": 0.807,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8111,
+              "recall": 0.7449,
+              "f1": 0.7766,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.77,
+              "recall": 0.8556,
+              "f1": 0.8105,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.899,
+              "recall": 0.8318,
+              "f1": 0.8641,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              92,
+              8,
+              6,
+              5
+            ],
+            [
+              13,
+              73,
+              8,
+              4
+            ],
+            [
+              5,
+              7,
+              77,
+              1
+            ],
+            [
+              7,
+              2,
+              9,
+              89
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6863,
+          "macro_f1": 0.6789,
+          "per_class": {
+            "bard": {
+              "precision": 0.7157,
+              "recall": 0.8111,
+              "f1": 0.7604,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6495,
+              "recall": 0.7159,
+              "f1": 0.6811,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.68,
+              "recall": 0.7312,
+              "f1": 0.7047,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7069,
+              "recall": 0.4767,
+              "f1": 0.5694,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              73,
+              8,
+              4,
+              5
+            ],
+            [
+              12,
+              63,
+              8,
+              5
+            ],
+            [
+              4,
+              14,
+              68,
+              7
+            ],
+            [
+              13,
+              12,
+              20,
+              41
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.1339,
+          "val_accuracy": 0.6197,
+          "val_macro_f1": 0.6195,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7949,
+          "val_accuracy": 0.6798,
+          "val_macro_f1": 0.6784,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.633,
+          "val_accuracy": 0.6936,
+          "val_macro_f1": 0.6932,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.5031,
+          "val_accuracy": 0.6898,
+          "val_macro_f1": 0.6933,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3825,
+          "val_accuracy": 0.708,
+          "val_macro_f1": 0.7111,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.282,
+          "val_accuracy": 0.7193,
+          "val_macro_f1": 0.7194,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.2014,
+          "val_accuracy": 0.7262,
+          "val_macro_f1": 0.7258,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.1373,
+          "val_accuracy": 0.7343,
+          "val_macro_f1": 0.733,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0911,
+          "val_accuracy": 0.7281,
+          "val_macro_f1": 0.7288,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0625,
+          "val_accuracy": 0.7318,
+          "val_macro_f1": 0.7322,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0443,
+          "val_accuracy": 0.7375,
+          "val_macro_f1": 0.7372,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0329,
+          "val_accuracy": 0.7318,
+          "val_macro_f1": 0.7321,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "both",
+      "tag": "rq_both_cnn"
+    },
+    "lstm_both": {
+      "accuracy": 0.578,
+      "macro_f1": 0.5785,
+      "per_class": {
+        "bard": {
+          "precision": 0.6506,
+          "recall": 0.5948,
+          "f1": 0.6214,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.566,
+          "recall": 0.6186,
+          "f1": 0.5911,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5392,
+          "recall": 0.565,
+          "f1": 0.5518,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.5657,
+          "recall": 0.5346,
+          "f1": 0.5497,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          229,
+          64,
+          38,
+          54
+        ],
+        [
+          35,
+          253,
+          59,
+          62
+        ],
+        [
+          40,
+          68,
+          213,
+          56
+        ],
+        [
+          48,
+          62,
+          85,
+          224
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.5123,
+          "macro_f1": 0.5099,
+          "per_class": {
+            "bard": {
+              "precision": 0.4889,
+              "recall": 0.4583,
+              "f1": 0.4731,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5039,
+              "recall": 0.6214,
+              "f1": 0.5565,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.4792,
+              "recall": 0.451,
+              "f1": 0.4646,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5806,
+              "recall": 0.5143,
+              "f1": 0.5455,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              44,
+              21,
+              19,
+              12
+            ],
+            [
+              14,
+              64,
+              13,
+              12
+            ],
+            [
+              16,
+              25,
+              46,
+              15
+            ],
+            [
+              16,
+              17,
+              18,
+              54
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.5487,
+          "macro_f1": 0.5498,
+          "per_class": {
+            "bard": {
+              "precision": 0.6842,
+              "recall": 0.5909,
+              "f1": 0.6341,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5522,
+              "recall": 0.6167,
+              "f1": 0.5827,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.4257,
+              "recall": 0.4674,
+              "f1": 0.4456,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5636,
+              "recall": 0.5124,
+              "f1": 0.5368,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              52,
+              18,
+              6,
+              12
+            ],
+            [
+              7,
+              74,
+              22,
+              17
+            ],
+            [
+              8,
+              22,
+              43,
+              19
+            ],
+            [
+              9,
+              20,
+              30,
+              62
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7094,
+          "macro_f1": 0.7094,
+          "per_class": {
+            "bard": {
+              "precision": 0.7476,
+              "recall": 0.6937,
+              "f1": 0.7196,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7442,
+              "recall": 0.6531,
+              "f1": 0.6957,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.6757,
+              "recall": 0.8333,
+              "f1": 0.7463,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6792,
+              "recall": 0.6729,
+              "f1": 0.6761,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              77,
+              9,
+              12,
+              13
+            ],
+            [
+              11,
+              64,
+              8,
+              15
+            ],
+            [
+              5,
+              4,
+              75,
+              6
+            ],
+            [
+              10,
+              9,
+              16,
+              72
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5378,
+          "macro_f1": 0.5376,
+          "per_class": {
+            "bard": {
+              "precision": 0.6747,
+              "recall": 0.6222,
+              "f1": 0.6474,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.51,
+              "recall": 0.5795,
+              "f1": 0.5426,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5632,
+              "recall": 0.5269,
+              "f1": 0.5444,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.4138,
+              "recall": 0.4186,
+              "f1": 0.4162,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              56,
+              16,
+              1,
+              17
+            ],
+            [
+              3,
+              51,
+              16,
+              18
+            ],
+            [
+              11,
+              17,
+              49,
+              16
+            ],
+            [
+              13,
+              16,
+              21,
+              36
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.25,
+          "val_accuracy": 0.4524,
+          "val_macro_f1": 0.4327,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.1209,
+          "val_accuracy": 0.4994,
+          "val_macro_f1": 0.4984,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0144,
+          "val_accuracy": 0.5301,
+          "val_macro_f1": 0.5327,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.8873,
+          "val_accuracy": 0.5551,
+          "val_macro_f1": 0.5563,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7325,
+          "val_accuracy": 0.5501,
+          "val_macro_f1": 0.5434,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6086,
+          "val_accuracy": 0.5564,
+          "val_macro_f1": 0.5547,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.4578,
+          "val_accuracy": 0.557,
+          "val_macro_f1": 0.558,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.328,
+          "val_accuracy": 0.5476,
+          "val_macro_f1": 0.5489,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.2281,
+          "val_accuracy": 0.5708,
+          "val_macro_f1": 0.5709,
+          "selected": true
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.1707,
+          "val_accuracy": 0.5595,
+          "val_macro_f1": 0.5611,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.1019,
+          "val_accuracy": 0.5702,
+          "val_macro_f1": 0.5697,
+          "selected": false
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0805,
+          "val_accuracy": 0.5608,
+          "val_macro_f1": 0.5596,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "both",
+      "tag": "rq_both_lstm"
+    }
+  },
+  "baselines": {
+    "output": {
+      "nb": {
+        "accuracy": 0.5629,
+        "macro_f1": 0.5601,
+        "per_class": {
+          "bard": {
+            "precision": 0.5909,
+            "recall": 0.6753,
+            "f1": 0.6303,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.6882,
+            "recall": 0.4694,
+            "f1": 0.5581,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.5258,
+            "recall": 0.4589,
+            "f1": 0.4901,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.4982,
+            "recall": 0.6444,
+            "f1": 0.5619,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            260,
+            21,
+            52,
+            52
+          ],
+          [
+            67,
+            192,
+            42,
+            108
+          ],
+          [
+            52,
+            40,
+            173,
+            112
+          ],
+          [
+            61,
+            26,
+            62,
+            270
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "naive_bayes",
+        "view": "output",
+        "n_train": 7482,
+        "n_test": 1590
+      },
+      "lr": {
+        "accuracy": 0.7314,
+        "macro_f1": 0.7319,
+        "per_class": {
+          "bard": {
+            "precision": 0.7666,
+            "recall": 0.7506,
+            "f1": 0.7585,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.705,
+            "recall": 0.7188,
+            "f1": 0.7119,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.7165,
+            "recall": 0.7374,
+            "f1": 0.7268,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.7402,
+            "recall": 0.7208,
+            "f1": 0.7304,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            289,
+            38,
+            23,
+            35
+          ],
+          [
+            42,
+            294,
+            41,
+            32
+          ],
+          [
+            19,
+            41,
+            278,
+            39
+          ],
+          [
+            27,
+            44,
+            46,
+            302
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "logreg",
+        "view": "output",
+        "n_train": 7482,
+        "n_test": 1590
+      },
+      "lr_top_words": {
+        "bard": {
+          "high": [
+            {
+              "word": "here",
+              "weight": 7.0673
+            },
+            {
+              "word": "main",
+              "weight": 5.4167
+            },
+            {
+              "word": "following",
+              "weight": 5.2381
+            },
+            {
+              "word": "sure",
+              "weight": 5.0225
+            },
+            {
+              "word": "variety",
+              "weight": 4.6261
+            },
+            {
+              "word": "able",
+              "weight": 4.411
+            },
+            {
+              "word": "contact",
+              "weight": 4.2913
+            },
+            {
+              "word": "very",
+              "weight": 4.2592
+            },
+            {
+              "word": "leaves",
+              "weight": 4.1819
+            },
+            {
+              "word": "going",
+              "weight": 4.0702
+            },
+            {
+              "word": "def",
+              "weight": 3.9751
+            },
+            {
+              "word": "garlic",
+              "weight": 3.7453
+            }
+          ],
+          "low": [
+            {
+              "word": "here's",
+              "weight": -11.2829
+            },
+            {
+              "word": "various",
+              "weight": -7.4753
+            },
+            {
+              "word": "further",
+              "weight": -5.5536
+            },
+            {
+              "word": "given",
+              "weight": -5.2804
+            },
+            {
+              "word": "assist",
+              "weight": -5.2724
+            },
+            {
+              "word": "confidence",
+              "weight": -5.1321
+            },
+            {
+              "word": "like",
+              "weight": -5.0584
+            },
+            {
+              "word": "i'd",
+              "weight": -4.5291
+            }
+          ]
+        },
+        "falcon-40b-instruct": {
+          "high": [
+            {
+              "word": "assistant",
+              "weight": 13.9161
+            },
+            {
+              "word": "primes",
+              "weight": 5.409
+            },
+            {
+              "word": "response",
+              "weight": 4.9368
+            },
+            {
+              "word": "correct",
+              "weight": 4.7476
+            },
+            {
+              "word": "sorry",
+              "weight": 4.7094
+            },
+            {
+              "word": "therefore",
+              "weight": 4.5756
+            },
+            {
+              "word": "here's",
+              "weight": 4.5201
+            },
+            {
+              "word": "suggestions",
+              "weight": 4.3995
+            },
+            {
+              "word": "here",
+              "weight": 4.2393
+            },
+            {
+              "word": "highlight",
+              "weight": 4.128
+            },
+            {
+              "word": "overall",
+              "weight": 4.0611
+            },
+            {
+              "word": "q",
+              "weight": 4.0125
+            }
+          ],
+          "low": [
+            {
+              "word": "i'd",
+              "weight": -5.9884
+            },
+            {
+              "word": "happy",
+              "weight": -5.8681
+            },
+            {
+              "word": "confidence",
+              "weight": -5.6024
+            },
+            {
+              "word": "90",
+              "weight": -5.3443
+            },
+            {
+              "word": "i'll",
+              "weight": -4.7346
+            },
+            {
+              "word": "television",
+              "weight": -4.3348
+            },
+            {
+              "word": "typically",
+              "weight": -4.005
+            },
+            {
+              "word": "harmful",
+              "weight": -4.0036
+            }
+          ]
+        },
+        "gpt-4": {
+          "high": [
+            {
+              "word": "95",
+              "weight": 11.1756
+            },
+            {
+              "word": "various",
+              "weight": 5.3904
+            },
+            {
+              "word": "remember",
+              "weight": 4.9912
+            },
+            {
+              "word": "now",
+              "weight": 4.9099
+            },
+            {
+              "word": "confidence",
+              "weight": 4.717
+            },
+            {
+              "word": "another",
+              "weight": 4.6993
+            },
+            {
+              "word": "due",
+              "weight": 4.5381
+            },
+            {
+              "word": "simple",
+              "weight": 4.5325
+            },
+            {
+              "word": "tell",
+              "weight": 4.3274
+            },
+            {
+              "word": "provided",
+              "weight": 4.2101
+            },
+            {
+              "word": "\u2013",
+              "weight": 4.2016
+            },
+            {
+              "word": "like",
+              "weight": 4.1155
+            }
+          ],
+          "low": [
+            {
+              "word": "hope",
+              "weight": -8.1076
+            },
+            {
+              "word": "here",
+              "weight": -7.3332
+            },
+            {
+              "word": "therefore",
+              "weight": -7.1644
+            },
+            {
+              "word": "important",
+              "weight": -6.5436
+            },
+            {
+              "word": "assistant",
+              "weight": -6.0425
+            },
+            {
+              "word": "80",
+              "weight": -5.496
+            },
+            {
+              "word": "helps",
+              "weight": -4.7243
+            },
+            {
+              "word": "sure",
+              "weight": -4.4641
+            }
+          ]
+        },
+        "llama-2-70b-chat": {
+          "high": [
+            {
+              "word": "happy",
+              "weight": 8.6656
+            },
+            {
+              "word": "i'd",
+              "weight": 8.4303
+            },
+            {
+              "word": "here's",
+              "weight": 8.0838
+            },
+            {
+              "word": "80",
+              "weight": 6.7453
+            },
+            {
+              "word": "confidence",
+              "weight": 6.0175
+            },
+            {
+              "word": "therefore",
+              "weight": 5.5273
+            },
+            {
+              "word": "it's",
+              "weight": 5.0851
+            },
+            {
+              "word": "let's",
+              "weight": 4.8801
+            },
+            {
+              "word": "harmful",
+              "weight": 4.6853
+            },
+            {
+              "word": "hope",
+              "weight": 4.6779
+            },
+            {
+              "word": "adventure",
+              "weight": 4.44
+            },
+            {
+              "word": "further",
+              "weight": 4.4034
+            }
+          ],
+          "low": [
+            {
+              "word": "95",
+              "weight": -7.5536
+            },
+            {
+              "word": "due",
+              "weight": -4.0349
+            },
+            {
+              "word": "here",
+              "weight": -3.9733
+            },
+            {
+              "word": "level",
+              "weight": -3.9371
+            },
+            {
+              "word": "assistant",
+              "weight": -3.9267
+            },
+            {
+              "word": "might",
+              "weight": -3.5945
+            },
+            {
+              "word": "keep",
+              "weight": -3.5085
+            },
+            {
+              "word": "right",
+              "weight": -3.3441
+            }
+          ]
+        }
+      },
+      "kmeans": {
+        "k": 4,
+        "nmi": 0.0541,
+        "purity": 0.3553,
+        "n_test": 1590
+      }
+    },
+    "input": {
+      "nb": {
+        "accuracy": 0.2503,
+        "macro_f1": 0.231,
+        "per_class": {
+          "bard": {
+            "precision": 0.2611,
+            "recall": 0.5351,
+            "f1": 0.3509,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.2407,
+            "recall": 0.1589,
+            "f1": 0.1915,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.224,
+            "recall": 0.1485,
+            "f1": 0.1786,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.2527,
+            "recall": 0.1695,
+            "f1": 0.2029,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            206,
+            50,
+            61,
+            68
+          ],
+          [
+            210,
+            65,
+            62,
+            72
+          ],
+          [
+            176,
+            75,
+            56,
+            70
+          ],
+          [
+            197,
+            80,
+            71,
+            71
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "naive_bayes",
+        "view": "input",
+        "n_train": 7482,
+        "n_test": 1590
+      },
+      "lr": {
+        "accuracy": 0.2553,
+        "macro_f1": 0.2552,
+        "per_class": {
+          "bard": {
+            "precision": 0.26,
+            "recall": 0.2701,
+            "f1": 0.265,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.2574,
+            "recall": 0.2567,
+            "f1": 0.257,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.2383,
+            "recall": 0.244,
+            "f1": 0.2412,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.2652,
+            "recall": 0.2506,
+            "f1": 0.2577,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            104,
+            100,
+            82,
+            99
+          ],
+          [
+            93,
+            105,
+            114,
+            97
+          ],
+          [
+            95,
+            95,
+            92,
+            95
+          ],
+          [
+            108,
+            108,
+            98,
+            105
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "logreg",
+        "view": "input",
+        "n_train": 7482,
+        "n_test": 1590
+      }
+    },
+    "both": {
+      "nb": {
+        "accuracy": 0.4686,
+        "macro_f1": 0.465,
+        "per_class": {
+          "bard": {
+            "precision": 0.5267,
+            "recall": 0.5896,
+            "f1": 0.5564,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.4345,
+            "recall": 0.357,
+            "f1": 0.3919,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.4615,
+            "recall": 0.3979,
+            "f1": 0.4274,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.4458,
+            "recall": 0.5298,
+            "f1": 0.4842,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            227,
+            46,
+            60,
+            52
+          ],
+          [
+            72,
+            146,
+            57,
+            134
+          ],
+          [
+            69,
+            68,
+            150,
+            90
+          ],
+          [
+            63,
+            76,
+            58,
+            222
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "naive_bayes",
+        "view": "both",
+        "n_train": 7482,
+        "n_test": 1590
+      },
+      "lr": {
+        "accuracy": 0.6484,
+        "macro_f1": 0.6486,
+        "per_class": {
+          "bard": {
+            "precision": 0.6675,
+            "recall": 0.6779,
+            "f1": 0.6727,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.6129,
+            "recall": 0.6504,
+            "f1": 0.6311,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.6405,
+            "recall": 0.6286,
+            "f1": 0.6345,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.6759,
+            "recall": 0.6372,
+            "f1": 0.656,
+            "support": 419.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            261,
+            50,
+            29,
+            45
+          ],
+          [
+            55,
+            266,
+            50,
+            38
+          ],
+          [
+            32,
+            63,
+            237,
+            45
+          ],
+          [
+            43,
+            55,
+            54,
+            267
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "arch": "logreg",
+        "view": "both",
+        "n_train": 7482,
+        "n_test": 1590
+      }
+    }
+  },
+  "rq3": {
+    "cnn_writing": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.0863,
+          "val_accuracy": 0.6516,
+          "val_macro_f1": 0.6506,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7114,
+          "val_accuracy": 0.7043,
+          "val_macro_f1": 0.702,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.5524,
+          "val_accuracy": 0.7364,
+          "val_macro_f1": 0.7359,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.4272,
+          "val_accuracy": 0.7397,
+          "val_macro_f1": 0.7411,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3225,
+          "val_accuracy": 0.7636,
+          "val_macro_f1": 0.7635,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2388,
+          "val_accuracy": 0.7727,
+          "val_macro_f1": 0.7725,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1718,
+          "val_accuracy": 0.7834,
+          "val_macro_f1": 0.7831,
+          "selected": true
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.1204,
+          "val_accuracy": 0.7628,
+          "val_macro_f1": 0.7638,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0816,
+          "val_accuracy": 0.7735,
+          "val_macro_f1": 0.7734,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0579,
+          "val_accuracy": 0.7784,
+          "val_macro_f1": 0.7786,
+          "selected": false
+        }
+      ],
+      "arch": "cnn",
+      "held_out_domain": "writing",
+      "vocab_size": 12000,
+      "cross": {
+        "accuracy": 0.6246,
+        "macro_f1": 0.6231,
+        "per_class": {
+          "bard": {
+            "precision": 0.6771,
+            "recall": 0.7222,
+            "f1": 0.6989,
+            "support": 90.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.5357,
+            "recall": 0.6818,
+            "f1": 0.6,
+            "support": 88.0
+          },
+          "gpt-4": {
+            "precision": 0.6353,
+            "recall": 0.5806,
+            "f1": 0.6067,
+            "support": 93.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.6875,
+            "recall": 0.5116,
+            "f1": 0.5867,
+            "support": 86.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            65,
+            15,
+            8,
+            2
+          ],
+          [
+            17,
+            60,
+            5,
+            6
+          ],
+          [
+            2,
+            25,
+            54,
+            12
+          ],
+          [
+            12,
+            12,
+            18,
+            44
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 357,
+        "recall_by_model": {
+          "bard": 0.7222,
+          "falcon-40b-instruct": 0.6818,
+          "gpt-4": 0.5806,
+          "llama-2-70b-chat": 0.5116
+        }
+      },
+      "in_domain": {
+        "accuracy": 0.7656,
+        "macro_f1": 0.7656,
+        "per_class": {
+          "bard": {
+            "precision": 0.7853,
+            "recall": 0.8305,
+            "f1": 0.8072,
+            "support": 295.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.7893,
+            "recall": 0.6885,
+            "f1": 0.7354,
+            "support": 321.0
+          },
+          "gpt-4": {
+            "precision": 0.656,
+            "recall": 0.7923,
+            "f1": 0.7177,
+            "support": 284.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.849,
+            "recall": 0.7598,
+            "f1": 0.8019,
+            "support": 333.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            245,
+            19,
+            17,
+            14
+          ],
+          [
+            30,
+            221,
+            49,
+            21
+          ],
+          [
+            23,
+            26,
+            225,
+            10
+          ],
+          [
+            14,
+            14,
+            52,
+            253
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 1233,
+        "recall_by_model": {
+          "bard": 0.8305,
+          "falcon-40b-instruct": 0.6885,
+          "gpt-4": 0.7923,
+          "llama-2-70b-chat": 0.7598
+        }
+      },
+      "macro_f1_drop": 0.1425,
+      "accuracy_drop": 0.141
+    },
+    "lstm_writing": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.23,
+          "val_accuracy": 0.4572,
+          "val_macro_f1": 0.4547,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.0784,
+          "val_accuracy": 0.4728,
+          "val_macro_f1": 0.461,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0153,
+          "val_accuracy": 0.4926,
+          "val_macro_f1": 0.4856,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.915,
+          "val_accuracy": 0.5618,
+          "val_macro_f1": 0.5601,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7924,
+          "val_accuracy": 0.5247,
+          "val_macro_f1": 0.5209,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6799,
+          "val_accuracy": 0.5618,
+          "val_macro_f1": 0.5626,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.5489,
+          "val_accuracy": 0.5741,
+          "val_macro_f1": 0.5743,
+          "selected": true
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.45,
+          "val_accuracy": 0.5412,
+          "val_macro_f1": 0.5397,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.3401,
+          "val_accuracy": 0.5717,
+          "val_macro_f1": 0.5726,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.2734,
+          "val_accuracy": 0.5667,
+          "val_macro_f1": 0.5646,
+          "selected": false
+        }
+      ],
+      "arch": "lstm",
+      "held_out_domain": "writing",
+      "vocab_size": 12000,
+      "cross": {
+        "accuracy": 0.5238,
+        "macro_f1": 0.5096,
+        "per_class": {
+          "bard": {
+            "precision": 0.5149,
+            "recall": 0.7667,
+            "f1": 0.6161,
+            "support": 90.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.5455,
+            "recall": 0.4773,
+            "f1": 0.5091,
+            "support": 88.0
+          },
+          "gpt-4": {
+            "precision": 0.5618,
+            "recall": 0.5376,
+            "f1": 0.5495,
+            "support": 93.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.4561,
+            "recall": 0.3023,
+            "f1": 0.3636,
+            "support": 86.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            69,
+            6,
+            7,
+            8
+          ],
+          [
+            21,
+            42,
+            16,
+            9
+          ],
+          [
+            12,
+            17,
+            50,
+            14
+          ],
+          [
+            32,
+            12,
+            16,
+            26
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 357,
+        "recall_by_model": {
+          "bard": 0.7667,
+          "falcon-40b-instruct": 0.4773,
+          "gpt-4": 0.5376,
+          "llama-2-70b-chat": 0.3023
+        }
+      },
+      "in_domain": {
+        "accuracy": 0.5766,
+        "macro_f1": 0.5768,
+        "per_class": {
+          "bard": {
+            "precision": 0.6062,
+            "recall": 0.6576,
+            "f1": 0.6309,
+            "support": 295.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.625,
+            "recall": 0.5607,
+            "f1": 0.5911,
+            "support": 321.0
+          },
+          "gpt-4": {
+            "precision": 0.4943,
+            "recall": 0.6127,
+            "f1": 0.5472,
+            "support": 284.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.5971,
+            "recall": 0.4895,
+            "f1": 0.538,
+            "support": 333.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            194,
+            29,
+            41,
+            31
+          ],
+          [
+            46,
+            180,
+            53,
+            42
+          ],
+          [
+            29,
+            44,
+            174,
+            37
+          ],
+          [
+            51,
+            35,
+            84,
+            163
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 1233,
+        "recall_by_model": {
+          "bard": 0.6576,
+          "falcon-40b-instruct": 0.5607,
+          "gpt-4": 0.6127,
+          "llama-2-70b-chat": 0.4895
+        }
+      },
+      "macro_f1_drop": 0.0672,
+      "accuracy_drop": 0.0528
+    },
+    "cnn_code": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.1417,
+          "val_accuracy": 0.6171,
+          "val_macro_f1": 0.612,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7684,
+          "val_accuracy": 0.6767,
+          "val_macro_f1": 0.6758,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.5933,
+          "val_accuracy": 0.7028,
+          "val_macro_f1": 0.7021,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.4558,
+          "val_accuracy": 0.7179,
+          "val_macro_f1": 0.7185,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.337,
+          "val_accuracy": 0.7246,
+          "val_macro_f1": 0.7247,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2464,
+          "val_accuracy": 0.7179,
+          "val_macro_f1": 0.7179,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1703,
+          "val_accuracy": 0.7322,
+          "val_macro_f1": 0.7327,
+          "selected": true
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.1149,
+          "val_accuracy": 0.7179,
+          "val_macro_f1": 0.7186,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0777,
+          "val_accuracy": 0.7313,
+          "val_macro_f1": 0.7321,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0539,
+          "val_accuracy": 0.7212,
+          "val_macro_f1": 0.7216,
+          "selected": false
+        }
+      ],
+      "arch": "cnn",
+      "held_out_domain": "code",
+      "vocab_size": 12000,
+      "cross": {
+        "accuracy": 0.6527,
+        "macro_f1": 0.6546,
+        "per_class": {
+          "bard": {
+            "precision": 0.7093,
+            "recall": 0.6354,
+            "f1": 0.6703,
+            "support": 96.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.6667,
+            "recall": 0.6408,
+            "f1": 0.6535,
+            "support": 103.0
+          },
+          "gpt-4": {
+            "precision": 0.5429,
+            "recall": 0.7451,
+            "f1": 0.6281,
+            "support": 102.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.7654,
+            "recall": 0.5905,
+            "f1": 0.6667,
+            "support": 105.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            61,
+            17,
+            13,
+            5
+          ],
+          [
+            6,
+            66,
+            25,
+            6
+          ],
+          [
+            12,
+            6,
+            76,
+            8
+          ],
+          [
+            7,
+            10,
+            26,
+            62
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 406,
+        "recall_by_model": {
+          "bard": 0.6354,
+          "falcon-40b-instruct": 0.6408,
+          "gpt-4": 0.7451,
+          "llama-2-70b-chat": 0.5905
+        }
+      },
+      "in_domain": {
+        "accuracy": 0.7306,
+        "macro_f1": 0.7309,
+        "per_class": {
+          "bard": {
+            "precision": 0.755,
+            "recall": 0.7889,
+            "f1": 0.7716,
+            "support": 289.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.7675,
+            "recall": 0.6797,
+            "f1": 0.721,
+            "support": 306.0
+          },
+          "gpt-4": {
+            "precision": 0.6179,
+            "recall": 0.8291,
+            "f1": 0.7081,
+            "support": 275.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.8306,
+            "recall": 0.6401,
+            "f1": 0.723,
+            "support": 314.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            228,
+            22,
+            27,
+            12
+          ],
+          [
+            34,
+            208,
+            46,
+            18
+          ],
+          [
+            15,
+            21,
+            228,
+            11
+          ],
+          [
+            25,
+            20,
+            68,
+            201
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 1184,
+        "recall_by_model": {
+          "bard": 0.7889,
+          "falcon-40b-instruct": 0.6797,
+          "gpt-4": 0.8291,
+          "llama-2-70b-chat": 0.6401
+        }
+      },
+      "macro_f1_drop": 0.0763,
+      "accuracy_drop": 0.0779
+    },
+    "lstm_code": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.2397,
+          "val_accuracy": 0.4895,
+          "val_macro_f1": 0.4652,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.1309,
+          "val_accuracy": 0.5004,
+          "val_macro_f1": 0.495,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0115,
+          "val_accuracy": 0.5735,
+          "val_macro_f1": 0.5696,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.9164,
+          "val_accuracy": 0.5676,
+          "val_macro_f1": 0.5675,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7883,
+          "val_accuracy": 0.5961,
+          "val_macro_f1": 0.5938,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6704,
+          "val_accuracy": 0.6129,
+          "val_macro_f1": 0.6158,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.5414,
+          "val_accuracy": 0.6012,
+          "val_macro_f1": 0.6044,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.4051,
+          "val_accuracy": 0.6205,
+          "val_macro_f1": 0.623,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.2953,
+          "val_accuracy": 0.6129,
+          "val_macro_f1": 0.6151,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.2436,
+          "val_accuracy": 0.6196,
+          "val_macro_f1": 0.6211,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.1526,
+          "val_accuracy": 0.6331,
+          "val_macro_f1": 0.6354,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0974,
+          "val_accuracy": 0.6247,
+          "val_macro_f1": 0.6263,
+          "selected": false
+        }
+      ],
+      "arch": "lstm",
+      "held_out_domain": "code",
+      "vocab_size": 12000,
+      "cross": {
+        "accuracy": 0.4507,
+        "macro_f1": 0.4472,
+        "per_class": {
+          "bard": {
+            "precision": 0.58,
+            "recall": 0.3021,
+            "f1": 0.3973,
+            "support": 96.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.5175,
+            "recall": 0.5728,
+            "f1": 0.5438,
+            "support": 103.0
+          },
+          "gpt-4": {
+            "precision": 0.3603,
+            "recall": 0.4804,
+            "f1": 0.4118,
+            "support": 102.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.434,
+            "recall": 0.4381,
+            "f1": 0.436,
+            "support": 105.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            29,
+            17,
+            27,
+            23
+          ],
+          [
+            6,
+            59,
+            23,
+            15
+          ],
+          [
+            7,
+            24,
+            49,
+            22
+          ],
+          [
+            8,
+            14,
+            37,
+            46
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 406,
+        "recall_by_model": {
+          "bard": 0.3021,
+          "falcon-40b-instruct": 0.5728,
+          "gpt-4": 0.4804,
+          "llama-2-70b-chat": 0.4381
+        }
+      },
+      "in_domain": {
+        "accuracy": 0.5997,
+        "macro_f1": 0.6019,
+        "per_class": {
+          "bard": {
+            "precision": 0.7293,
+            "recall": 0.6713,
+            "f1": 0.6991,
+            "support": 289.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.6402,
+            "recall": 0.5523,
+            "f1": 0.593,
+            "support": 306.0
+          },
+          "gpt-4": {
+            "precision": 0.5144,
+            "recall": 0.5855,
+            "f1": 0.5476,
+            "support": 275.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.5455,
+            "recall": 0.5924,
+            "f1": 0.5679,
+            "support": 314.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            194,
+            31,
+            25,
+            39
+          ],
+          [
+            29,
+            169,
+            55,
+            53
+          ],
+          [
+            17,
+            34,
+            161,
+            63
+          ],
+          [
+            26,
+            30,
+            72,
+            186
+          ]
+        ],
+        "labels": [
+          "bard",
+          "falcon-40b-instruct",
+          "gpt-4",
+          "llama-2-70b-chat"
+        ],
+        "n": 1184,
+        "recall_by_model": {
+          "bard": 0.6713,
+          "falcon-40b-instruct": 0.5523,
+          "gpt-4": 0.5855,
+          "llama-2-70b-chat": 0.5924
+        }
+      },
+      "macro_f1_drop": 0.1547,
+      "accuracy_drop": 0.1489
+    }
+  },
+  "ablations": {
+    "cnn_strip_markdown": {
+      "accuracy": 0.7403,
+      "macro_f1": 0.7407,
+      "per_class": {
+        "bard": {
+          "precision": 0.7456,
+          "recall": 0.7688,
+          "f1": 0.757,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.734,
+          "recall": 0.7286,
+          "f1": 0.7313,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.663,
+          "recall": 0.7931,
+          "f1": 0.7222,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.8452,
+          "recall": 0.6778,
+          "f1": 0.7523,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          296,
+          42,
+          32,
+          15
+        ],
+        [
+          41,
+          298,
+          49,
+          21
+        ],
+        [
+          23,
+          39,
+          299,
+          16
+        ],
+        [
+          37,
+          27,
+          71,
+          284
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.7389,
+          "macro_f1": 0.7398,
+          "per_class": {
+            "bard": {
+              "precision": 0.7255,
+              "recall": 0.7708,
+              "f1": 0.7475,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.73,
+              "recall": 0.7087,
+              "f1": 0.7192,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.6667,
+              "recall": 0.8039,
+              "f1": 0.7289,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8765,
+              "recall": 0.6762,
+              "f1": 0.7634,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              74,
+              12,
+              6,
+              4
+            ],
+            [
+              11,
+              73,
+              18,
+              1
+            ],
+            [
+              8,
+              7,
+              82,
+              5
+            ],
+            [
+              9,
+              8,
+              17,
+              71
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.7316,
+          "macro_f1": 0.7315,
+          "per_class": {
+            "bard": {
+              "precision": 0.7143,
+              "recall": 0.7955,
+              "f1": 0.7527,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7295,
+              "recall": 0.7417,
+              "f1": 0.7355,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.633,
+              "recall": 0.75,
+              "f1": 0.6866,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8696,
+              "recall": 0.6612,
+              "f1": 0.7512,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              70,
+              8,
+              9,
+              1
+            ],
+            [
+              10,
+              89,
+              13,
+              8
+            ],
+            [
+              6,
+              14,
+              69,
+              3
+            ],
+            [
+              12,
+              11,
+              18,
+              80
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8177,
+          "macro_f1": 0.8172,
+          "per_class": {
+            "bard": {
+              "precision": 0.8302,
+              "recall": 0.7928,
+              "f1": 0.8111,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8409,
+              "recall": 0.7551,
+              "f1": 0.7957,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7642,
+              "recall": 0.9,
+              "f1": 0.8265,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8396,
+              "recall": 0.8318,
+              "f1": 0.8357,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              88,
+              9,
+              6,
+              8
+            ],
+            [
+              9,
+              74,
+              7,
+              8
+            ],
+            [
+              6,
+              2,
+              81,
+              1
+            ],
+            [
+              3,
+              3,
+              12,
+              89
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6639,
+          "macro_f1": 0.6617,
+          "per_class": {
+            "bard": {
+              "precision": 0.7033,
+              "recall": 0.7111,
+              "f1": 0.7072,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6458,
+              "recall": 0.7045,
+              "f1": 0.6739,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5929,
+              "recall": 0.7204,
+              "f1": 0.6505,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7719,
+              "recall": 0.5116,
+              "f1": 0.6154,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              64,
+              13,
+              11,
+              2
+            ],
+            [
+              11,
+              62,
+              11,
+              4
+            ],
+            [
+              3,
+              16,
+              67,
+              7
+            ],
+            [
+              13,
+              5,
+              24,
+              44
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 273740.9406,
+          "val_accuracy": 0.6197,
+          "val_macro_f1": 0.6185,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 299558.6459,
+          "val_accuracy": 0.6861,
+          "val_macro_f1": 0.6851,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 286286.5739,
+          "val_accuracy": 0.6886,
+          "val_macro_f1": 0.6899,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 242836.7854,
+          "val_accuracy": 0.703,
+          "val_macro_f1": 0.7038,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 305418.1028,
+          "val_accuracy": 0.7099,
+          "val_macro_f1": 0.7105,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 142763.6307,
+          "val_accuracy": 0.708,
+          "val_macro_f1": 0.7073,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 486484.4381,
+          "val_accuracy": 0.703,
+          "val_macro_f1": 0.7016,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 341006.3575,
+          "val_accuracy": 0.7262,
+          "val_macro_f1": 0.7261,
+          "selected": true
+        },
+        {
+          "epoch": 9,
+          "train_loss": 182427.8716,
+          "val_accuracy": 0.4806,
+          "val_macro_f1": 0.4575,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 496984.6559,
+          "val_accuracy": 0.7043,
+          "val_macro_f1": 0.7048,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 389182.4295,
+          "val_accuracy": 0.7249,
+          "val_macro_f1": 0.7252,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "output",
+      "tag": "ablate_strip_markdown_cnn"
+    },
+    "lstm_strip_markdown": {
+      "accuracy": 0.6006,
+      "macro_f1": 0.5961,
+      "per_class": {
+        "bard": {
+          "precision": 0.5571,
+          "recall": 0.8234,
+          "f1": 0.6646,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.6585,
+          "recall": 0.5232,
+          "f1": 0.5831,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5856,
+          "recall": 0.5809,
+          "f1": 0.5832,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.6366,
+          "recall": 0.4893,
+          "f1": 0.5533,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          317,
+          25,
+          23,
+          20
+        ],
+        [
+          91,
+          214,
+          61,
+          43
+        ],
+        [
+          63,
+          41,
+          219,
+          54
+        ],
+        [
+          98,
+          45,
+          71,
+          205
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.6059,
+          "macro_f1": 0.6017,
+          "per_class": {
+            "bard": {
+              "precision": 0.5912,
+              "recall": 0.8438,
+              "f1": 0.6953,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6404,
+              "recall": 0.5534,
+              "f1": 0.5938,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.5437,
+              "recall": 0.549,
+              "f1": 0.5463,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6753,
+              "recall": 0.4952,
+              "f1": 0.5714,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              81,
+              7,
+              6,
+              2
+            ],
+            [
+              19,
+              57,
+              19,
+              8
+            ],
+            [
+              15,
+              16,
+              56,
+              15
+            ],
+            [
+              22,
+              9,
+              22,
+              52
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.5178,
+          "macro_f1": 0.5118,
+          "per_class": {
+            "bard": {
+              "precision": 0.4722,
+              "recall": 0.7727,
+              "f1": 0.5862,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6162,
+              "recall": 0.5083,
+              "f1": 0.5571,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.4157,
+              "recall": 0.4022,
+              "f1": 0.4088,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5843,
+              "recall": 0.4298,
+              "f1": 0.4952,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              68,
+              4,
+              8,
+              8
+            ],
+            [
+              25,
+              61,
+              22,
+              12
+            ],
+            [
+              22,
+              16,
+              37,
+              17
+            ],
+            [
+              29,
+              18,
+              22,
+              52
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7044,
+          "macro_f1": 0.7006,
+          "per_class": {
+            "bard": {
+              "precision": 0.6087,
+              "recall": 0.8829,
+              "f1": 0.7206,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7692,
+              "recall": 0.5102,
+              "f1": 0.6135,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7802,
+              "recall": 0.7889,
+              "f1": 0.7845,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7528,
+              "recall": 0.6262,
+              "f1": 0.6837,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              98,
+              7,
+              3,
+              3
+            ],
+            [
+              26,
+              50,
+              8,
+              14
+            ],
+            [
+              13,
+              1,
+              71,
+              5
+            ],
+            [
+              24,
+              7,
+              9,
+              67
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5742,
+          "macro_f1": 0.5656,
+          "per_class": {
+            "bard": {
+              "precision": 0.5512,
+              "recall": 0.7778,
+              "f1": 0.6452,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6389,
+              "recall": 0.5227,
+              "f1": 0.575,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.6044,
+              "recall": 0.5914,
+              "f1": 0.5978,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5075,
+              "recall": 0.3953,
+              "f1": 0.4444,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              70,
+              7,
+              6,
+              7
+            ],
+            [
+              21,
+              46,
+              12,
+              9
+            ],
+            [
+              13,
+              8,
+              55,
+              17
+            ],
+            [
+              23,
+              11,
+              18,
+              34
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.2481,
+          "val_accuracy": 0.4286,
+          "val_macro_f1": 0.4073,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.1414,
+          "val_accuracy": 0.5125,
+          "val_macro_f1": 0.5127,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0454,
+          "val_accuracy": 0.4956,
+          "val_macro_f1": 0.4953,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.925,
+          "val_accuracy": 0.5533,
+          "val_macro_f1": 0.5496,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.787,
+          "val_accuracy": 0.567,
+          "val_macro_f1": 0.5629,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.7561,
+          "val_accuracy": 0.5639,
+          "val_macro_f1": 0.5669,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.5707,
+          "val_accuracy": 0.5645,
+          "val_macro_f1": 0.5625,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.4567,
+          "val_accuracy": 0.599,
+          "val_macro_f1": 0.5968,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.3539,
+          "val_accuracy": 0.604,
+          "val_macro_f1": 0.602,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.2452,
+          "val_accuracy": 0.5758,
+          "val_macro_f1": 0.5772,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.2035,
+          "val_accuracy": 0.6046,
+          "val_macro_f1": 0.5984,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.172,
+          "val_accuracy": 0.6021,
+          "val_macro_f1": 0.6024,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "output",
+      "tag": "ablate_strip_markdown_lstm"
+    },
+    "cnn_fixed_length": {
+      "accuracy": 0.7145,
+      "macro_f1": 0.715,
+      "per_class": {
+        "bard": {
+          "precision": 0.7313,
+          "recall": 0.7636,
+          "f1": 0.7471,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7139,
+          "recall": 0.6773,
+          "f1": 0.6951,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6256,
+          "recall": 0.7268,
+          "f1": 0.6724,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.8039,
+          "recall": 0.6945,
+          "f1": 0.7452,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          294,
+          41,
+          34,
+          16
+        ],
+        [
+          42,
+          277,
+          61,
+          29
+        ],
+        [
+          33,
+          44,
+          274,
+          26
+        ],
+        [
+          33,
+          26,
+          69,
+          291
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.702,
+          "macro_f1": 0.7042,
+          "per_class": {
+            "bard": {
+              "precision": 0.7143,
+              "recall": 0.7292,
+              "f1": 0.7216,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7087,
+              "recall": 0.7087,
+              "f1": 0.7087,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.5932,
+              "recall": 0.6863,
+              "f1": 0.6364,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8276,
+              "recall": 0.6857,
+              "f1": 0.75,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              70,
+              13,
+              9,
+              4
+            ],
+            [
+              8,
+              73,
+              19,
+              3
+            ],
+            [
+              15,
+              9,
+              70,
+              8
+            ],
+            [
+              5,
+              8,
+              20,
+              72
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.7007,
+          "macro_f1": 0.6995,
+          "per_class": {
+            "bard": {
+              "precision": 0.6923,
+              "recall": 0.8182,
+              "f1": 0.75,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.713,
+              "recall": 0.6417,
+              "f1": 0.6754,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.5566,
+              "recall": 0.6413,
+              "f1": 0.596,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8447,
+              "recall": 0.719,
+              "f1": 0.7768,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              72,
+              7,
+              8,
+              1
+            ],
+            [
+              13,
+              77,
+              22,
+              8
+            ],
+            [
+              8,
+              18,
+              59,
+              7
+            ],
+            [
+              11,
+              6,
+              17,
+              87
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8079,
+          "macro_f1": 0.8063,
+          "per_class": {
+            "bard": {
+              "precision": 0.8396,
+              "recall": 0.8018,
+              "f1": 0.8203,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.814,
+              "recall": 0.7143,
+              "f1": 0.7609,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7596,
+              "recall": 0.8778,
+              "f1": 0.8144,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8182,
+              "recall": 0.8411,
+              "f1": 0.8295,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              89,
+              9,
+              5,
+              8
+            ],
+            [
+              8,
+              70,
+              9,
+              11
+            ],
+            [
+              5,
+              5,
+              79,
+              1
+            ],
+            [
+              4,
+              2,
+              11,
+              90
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6387,
+          "macro_f1": 0.6349,
+          "per_class": {
+            "bard": {
+              "precision": 0.6702,
+              "recall": 0.7,
+              "f1": 0.6848,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6264,
+              "recall": 0.6477,
+              "f1": 0.6369,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.6,
+              "recall": 0.7097,
+              "f1": 0.6502,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6774,
+              "recall": 0.4884,
+              "f1": 0.5676,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              63,
+              12,
+              12,
+              3
+            ],
+            [
+              13,
+              57,
+              11,
+              7
+            ],
+            [
+              5,
+              12,
+              66,
+              10
+            ],
+            [
+              13,
+              10,
+              21,
+              42
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.0775,
+          "val_accuracy": 0.631,
+          "val_macro_f1": 0.6307,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7727,
+          "val_accuracy": 0.6817,
+          "val_macro_f1": 0.677,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.618,
+          "val_accuracy": 0.6961,
+          "val_macro_f1": 0.6948,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.485,
+          "val_accuracy": 0.6867,
+          "val_macro_f1": 0.6869,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3629,
+          "val_accuracy": 0.7112,
+          "val_macro_f1": 0.7125,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2572,
+          "val_accuracy": 0.7055,
+          "val_macro_f1": 0.7058,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1748,
+          "val_accuracy": 0.7168,
+          "val_macro_f1": 0.7164,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.116,
+          "val_accuracy": 0.7149,
+          "val_macro_f1": 0.7139,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0754,
+          "val_accuracy": 0.7193,
+          "val_macro_f1": 0.7201,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0528,
+          "val_accuracy": 0.7168,
+          "val_macro_f1": 0.7161,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0373,
+          "val_accuracy": 0.7212,
+          "val_macro_f1": 0.7209,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0275,
+          "val_accuracy": 0.7199,
+          "val_macro_f1": 0.7197,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "output",
+      "tag": "ablate_fixed_length_cnn"
+    },
+    "lstm_fixed_length": {
+      "accuracy": 0.6031,
+      "macro_f1": 0.6017,
+      "per_class": {
+        "bard": {
+          "precision": 0.6268,
+          "recall": 0.6675,
+          "f1": 0.6465,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.5809,
+          "recall": 0.4914,
+          "f1": 0.5325,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5513,
+          "recall": 0.6127,
+          "f1": 0.5804,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.6506,
+          "recall": 0.6444,
+          "f1": 0.6475,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          257,
+          56,
+          33,
+          39
+        ],
+        [
+          72,
+          201,
+          81,
+          55
+        ],
+        [
+          42,
+          53,
+          231,
+          51
+        ],
+        [
+          39,
+          36,
+          74,
+          270
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.532,
+          "macro_f1": 0.5347,
+          "per_class": {
+            "bard": {
+              "precision": 0.5263,
+              "recall": 0.5208,
+              "f1": 0.5236,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.4953,
+              "recall": 0.5146,
+              "f1": 0.5048,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.4444,
+              "recall": 0.5098,
+              "f1": 0.4749,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7011,
+              "recall": 0.581,
+              "f1": 0.6354,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              50,
+              20,
+              17,
+              9
+            ],
+            [
+              17,
+              53,
+              25,
+              8
+            ],
+            [
+              20,
+              21,
+              52,
+              9
+            ],
+            [
+              8,
+              13,
+              23,
+              61
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.6033,
+          "macro_f1": 0.6,
+          "per_class": {
+            "bard": {
+              "precision": 0.5962,
+              "recall": 0.7045,
+              "f1": 0.6458,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5816,
+              "recall": 0.475,
+              "f1": 0.5229,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.5312,
+              "recall": 0.5543,
+              "f1": 0.5426,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6829,
+              "recall": 0.6942,
+              "f1": 0.6885,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              62,
+              15,
+              4,
+              7
+            ],
+            [
+              19,
+              57,
+              25,
+              19
+            ],
+            [
+              12,
+              16,
+              51,
+              13
+            ],
+            [
+              11,
+              10,
+              16,
+              84
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7069,
+          "macro_f1": 0.7022,
+          "per_class": {
+            "bard": {
+              "precision": 0.7328,
+              "recall": 0.7658,
+              "f1": 0.7489,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7647,
+              "recall": 0.5306,
+              "f1": 0.6265,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.6796,
+              "recall": 0.7778,
+              "f1": 0.7254,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6723,
+              "recall": 0.7477,
+              "f1": 0.708,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              85,
+              8,
+              4,
+              14
+            ],
+            [
+              17,
+              52,
+              15,
+              14
+            ],
+            [
+              5,
+              4,
+              70,
+              11
+            ],
+            [
+              9,
+              4,
+              14,
+              80
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5658,
+          "macro_f1": 0.5621,
+          "per_class": {
+            "bard": {
+              "precision": 0.6316,
+              "recall": 0.6667,
+              "f1": 0.6486,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5342,
+              "recall": 0.4432,
+              "f1": 0.4845,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5631,
+              "recall": 0.6237,
+              "f1": 0.5918,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5233,
+              "recall": 0.5233,
+              "f1": 0.5233,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              60,
+              13,
+              8,
+              9
+            ],
+            [
+              19,
+              39,
+              16,
+              14
+            ],
+            [
+              5,
+              12,
+              58,
+              18
+            ],
+            [
+              11,
+              9,
+              21,
+              45
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.355,
+          "val_accuracy": 0.4217,
+          "val_macro_f1": 0.3683,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.1996,
+          "val_accuracy": 0.4737,
+          "val_macro_f1": 0.4687,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0737,
+          "val_accuracy": 0.5251,
+          "val_macro_f1": 0.5265,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 1.0566,
+          "val_accuracy": 0.4975,
+          "val_macro_f1": 0.4891,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.8803,
+          "val_accuracy": 0.5789,
+          "val_macro_f1": 0.5784,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.8123,
+          "val_accuracy": 0.5414,
+          "val_macro_f1": 0.5412,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.7934,
+          "val_accuracy": 0.5564,
+          "val_macro_f1": 0.5554,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.6383,
+          "val_accuracy": 0.594,
+          "val_macro_f1": 0.5925,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.5133,
+          "val_accuracy": 0.5689,
+          "val_macro_f1": 0.568,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.4478,
+          "val_accuracy": 0.5796,
+          "val_macro_f1": 0.5792,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.3358,
+          "val_accuracy": 0.5959,
+          "val_macro_f1": 0.5947,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.2443,
+          "val_accuracy": 0.5902,
+          "val_macro_f1": 0.5899,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "output",
+      "tag": "ablate_fixed_length_lstm"
+    },
+    "cnn_strip_punct": {
+      "accuracy": 0.7239,
+      "macro_f1": 0.7236,
+      "per_class": {
+        "bard": {
+          "precision": 0.7082,
+          "recall": 0.7818,
+          "f1": 0.7432,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7078,
+          "recall": 0.687,
+          "f1": 0.6973,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6927,
+          "recall": 0.7056,
+          "f1": 0.6991,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.7891,
+          "recall": 0.7232,
+          "f1": 0.7547,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          301,
+          43,
+          19,
+          22
+        ],
+        [
+          53,
+          281,
+          48,
+          27
+        ],
+        [
+          36,
+          43,
+          266,
+          32
+        ],
+        [
+          35,
+          30,
+          51,
+          303
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.7266,
+          "macro_f1": 0.7276,
+          "per_class": {
+            "bard": {
+              "precision": 0.7264,
+              "recall": 0.8021,
+              "f1": 0.7624,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.701,
+              "recall": 0.6602,
+              "f1": 0.68,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.6549,
+              "recall": 0.7255,
+              "f1": 0.6884,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8444,
+              "recall": 0.7238,
+              "f1": 0.7795,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              77,
+              10,
+              4,
+              5
+            ],
+            [
+              13,
+              68,
+              20,
+              2
+            ],
+            [
+              11,
+              10,
+              74,
+              7
+            ],
+            [
+              5,
+              9,
+              15,
+              76
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.6841,
+          "macro_f1": 0.6776,
+          "per_class": {
+            "bard": {
+              "precision": 0.6147,
+              "recall": 0.7614,
+              "f1": 0.6802,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.688,
+              "recall": 0.7167,
+              "f1": 0.702,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.6579,
+              "recall": 0.5435,
+              "f1": 0.5952,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7658,
+              "recall": 0.7025,
+              "f1": 0.7328,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              67,
+              13,
+              5,
+              3
+            ],
+            [
+              13,
+              86,
+              9,
+              12
+            ],
+            [
+              16,
+              15,
+              50,
+              11
+            ],
+            [
+              13,
+              11,
+              12,
+              85
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8153,
+          "macro_f1": 0.8127,
+          "per_class": {
+            "bard": {
+              "precision": 0.8113,
+              "recall": 0.7748,
+              "f1": 0.7926,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8481,
+              "recall": 0.6837,
+              "f1": 0.7571,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.8061,
+              "recall": 0.8778,
+              "f1": 0.8404,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8049,
+              "recall": 0.9252,
+              "f1": 0.8609,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              86,
+              10,
+              6,
+              9
+            ],
+            [
+              13,
+              67,
+              9,
+              9
+            ],
+            [
+              3,
+              2,
+              79,
+              6
+            ],
+            [
+              4,
+              0,
+              4,
+              99
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6639,
+          "macro_f1": 0.6591,
+          "per_class": {
+            "bard": {
+              "precision": 0.6827,
+              "recall": 0.7889,
+              "f1": 0.732,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.625,
+              "recall": 0.6818,
+              "f1": 0.6522,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.6495,
+              "recall": 0.6774,
+              "f1": 0.6632,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7167,
+              "recall": 0.5,
+              "f1": 0.589,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              71,
+              10,
+              4,
+              5
+            ],
+            [
+              14,
+              60,
+              10,
+              4
+            ],
+            [
+              6,
+              16,
+              63,
+              8
+            ],
+            [
+              13,
+              10,
+              20,
+              43
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.1163,
+          "val_accuracy": 0.6278,
+          "val_macro_f1": 0.6274,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7693,
+          "val_accuracy": 0.6805,
+          "val_macro_f1": 0.6781,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.6004,
+          "val_accuracy": 0.6905,
+          "val_macro_f1": 0.6892,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.4582,
+          "val_accuracy": 0.6779,
+          "val_macro_f1": 0.6793,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3317,
+          "val_accuracy": 0.7099,
+          "val_macro_f1": 0.7109,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2284,
+          "val_accuracy": 0.7137,
+          "val_macro_f1": 0.7135,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1516,
+          "val_accuracy": 0.7086,
+          "val_macro_f1": 0.7067,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.0982,
+          "val_accuracy": 0.718,
+          "val_macro_f1": 0.7174,
+          "selected": true
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0627,
+          "val_accuracy": 0.7112,
+          "val_macro_f1": 0.7118,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0428,
+          "val_accuracy": 0.7137,
+          "val_macro_f1": 0.7131,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0304,
+          "val_accuracy": 0.718,
+          "val_macro_f1": 0.7178,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "output",
+      "tag": "ablate_strip_punct_cnn"
+    },
+    "lstm_strip_punct": {
+      "accuracy": 0.522,
+      "macro_f1": 0.5184,
+      "per_class": {
+        "bard": {
+          "precision": 0.5227,
+          "recall": 0.6571,
+          "f1": 0.5823,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.5153,
+          "recall": 0.4939,
+          "f1": 0.5044,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5,
+          "recall": 0.5782,
+          "f1": 0.5363,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.5647,
+          "recall": 0.3747,
+          "f1": 0.4505,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          253,
+          46,
+          54,
+          32
+        ],
+        [
+          85,
+          202,
+          69,
+          53
+        ],
+        [
+          57,
+          66,
+          218,
+          36
+        ],
+        [
+          89,
+          78,
+          95,
+          157
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.4778,
+          "macro_f1": 0.4777,
+          "per_class": {
+            "bard": {
+              "precision": 0.4951,
+              "recall": 0.5312,
+              "f1": 0.5126,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.4592,
+              "recall": 0.4369,
+              "f1": 0.4478,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.4331,
+              "recall": 0.5392,
+              "f1": 0.4803,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5513,
+              "recall": 0.4095,
+              "f1": 0.4699,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              51,
+              14,
+              20,
+              11
+            ],
+            [
+              20,
+              45,
+              26,
+              12
+            ],
+            [
+              18,
+              17,
+              55,
+              12
+            ],
+            [
+              14,
+              22,
+              26,
+              43
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.4869,
+          "macro_f1": 0.4838,
+          "per_class": {
+            "bard": {
+              "precision": 0.4741,
+              "recall": 0.625,
+              "f1": 0.5392,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5417,
+              "recall": 0.5417,
+              "f1": 0.5417,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.4038,
+              "recall": 0.4565,
+              "f1": 0.4286,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5309,
+              "recall": 0.3554,
+              "f1": 0.4257,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              55,
+              10,
+              15,
+              8
+            ],
+            [
+              19,
+              65,
+              15,
+              21
+            ],
+            [
+              22,
+              19,
+              42,
+              9
+            ],
+            [
+              20,
+              26,
+              32,
+              43
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.6601,
+          "macro_f1": 0.6509,
+          "per_class": {
+            "bard": {
+              "precision": 0.6418,
+              "recall": 0.7748,
+              "f1": 0.702,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.65,
+              "recall": 0.5306,
+              "f1": 0.5843,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.6585,
+              "recall": 0.9,
+              "f1": 0.7606,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7101,
+              "recall": 0.4579,
+              "f1": 0.5568,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              86,
+              10,
+              9,
+              6
+            ],
+            [
+              24,
+              52,
+              10,
+              12
+            ],
+            [
+              2,
+              5,
+              81,
+              2
+            ],
+            [
+              22,
+              13,
+              23,
+              49
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.4566,
+          "macro_f1": 0.4431,
+          "per_class": {
+            "bard": {
+              "precision": 0.4656,
+              "recall": 0.6778,
+              "f1": 0.552,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.4255,
+              "recall": 0.4545,
+              "f1": 0.4396,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.4878,
+              "recall": 0.4301,
+              "f1": 0.4571,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.44,
+              "recall": 0.2558,
+              "f1": 0.3235,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              61,
+              12,
+              10,
+              7
+            ],
+            [
+              22,
+              40,
+              18,
+              8
+            ],
+            [
+              15,
+              25,
+              40,
+              13
+            ],
+            [
+              33,
+              17,
+              14,
+              22
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.2992,
+          "val_accuracy": 0.3434,
+          "val_macro_f1": 0.2785,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.2141,
+          "val_accuracy": 0.4298,
+          "val_macro_f1": 0.4251,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0754,
+          "val_accuracy": 0.4799,
+          "val_macro_f1": 0.4754,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.9244,
+          "val_accuracy": 0.5125,
+          "val_macro_f1": 0.5091,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7783,
+          "val_accuracy": 0.532,
+          "val_macro_f1": 0.5283,
+          "selected": true
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.626,
+          "val_accuracy": 0.5207,
+          "val_macro_f1": 0.5194,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.4973,
+          "val_accuracy": 0.5044,
+          "val_macro_f1": 0.4982,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.3558,
+          "val_accuracy": 0.5301,
+          "val_macro_f1": 0.529,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "output",
+      "tag": "ablate_strip_punct_lstm"
+    },
+    "cnn_strip_all": {
+      "accuracy": 0.6799,
+      "macro_f1": 0.6798,
+      "per_class": {
+        "bard": {
+          "precision": 0.652,
+          "recall": 0.7299,
+          "f1": 0.6887,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7064,
+          "recall": 0.5941,
+          "f1": 0.6454,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.607,
+          "recall": 0.7374,
+          "f1": 0.6659,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.7815,
+          "recall": 0.6659,
+          "f1": 0.7191,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          281,
+          38,
+          44,
+          22
+        ],
+        [
+          65,
+          243,
+          69,
+          32
+        ],
+        [
+          37,
+          38,
+          278,
+          24
+        ],
+        [
+          48,
+          25,
+          67,
+          279
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.6921,
+          "macro_f1": 0.6931,
+          "per_class": {
+            "bard": {
+              "precision": 0.6667,
+              "recall": 0.75,
+              "f1": 0.7059,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6535,
+              "recall": 0.6408,
+              "f1": 0.6471,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.6486,
+              "recall": 0.7059,
+              "f1": 0.6761,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8256,
+              "recall": 0.6762,
+              "f1": 0.7435,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              72,
+              13,
+              8,
+              3
+            ],
+            [
+              14,
+              66,
+              20,
+              3
+            ],
+            [
+              11,
+              10,
+              72,
+              9
+            ],
+            [
+              11,
+              12,
+              11,
+              71
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.6603,
+          "macro_f1": 0.6587,
+          "per_class": {
+            "bard": {
+              "precision": 0.6019,
+              "recall": 0.7045,
+              "f1": 0.6492,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7115,
+              "recall": 0.6167,
+              "f1": 0.6607,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.5398,
+              "recall": 0.663,
+              "f1": 0.5951,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.802,
+              "recall": 0.6694,
+              "f1": 0.7297,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              62,
+              7,
+              14,
+              5
+            ],
+            [
+              16,
+              74,
+              20,
+              10
+            ],
+            [
+              10,
+              16,
+              61,
+              5
+            ],
+            [
+              15,
+              7,
+              18,
+              81
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7635,
+          "macro_f1": 0.761,
+          "per_class": {
+            "bard": {
+              "precision": 0.7632,
+              "recall": 0.7838,
+              "f1": 0.7733,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8158,
+              "recall": 0.6327,
+              "f1": 0.7126,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.6909,
+              "recall": 0.8444,
+              "f1": 0.76,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8019,
+              "recall": 0.7944,
+              "f1": 0.7981,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              87,
+              7,
+              10,
+              7
+            ],
+            [
+              13,
+              62,
+              13,
+              10
+            ],
+            [
+              7,
+              3,
+              76,
+              4
+            ],
+            [
+              7,
+              4,
+              11,
+              85
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5938,
+          "macro_f1": 0.5878,
+          "per_class": {
+            "bard": {
+              "precision": 0.566,
+              "recall": 0.6667,
+              "f1": 0.6122,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6508,
+              "recall": 0.4659,
+              "f1": 0.543,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5565,
+              "recall": 0.7419,
+              "f1": 0.6359,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6562,
+              "recall": 0.4884,
+              "f1": 0.56,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              60,
+              11,
+              12,
+              7
+            ],
+            [
+              22,
+              41,
+              16,
+              9
+            ],
+            [
+              9,
+              9,
+              69,
+              6
+            ],
+            [
+              15,
+              2,
+              27,
+              42
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.1524,
+          "val_accuracy": 0.5821,
+          "val_macro_f1": 0.5815,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.8553,
+          "val_accuracy": 0.6266,
+          "val_macro_f1": 0.6261,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.6783,
+          "val_accuracy": 0.6385,
+          "val_macro_f1": 0.634,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.5215,
+          "val_accuracy": 0.6272,
+          "val_macro_f1": 0.6292,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3813,
+          "val_accuracy": 0.641,
+          "val_macro_f1": 0.643,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.2595,
+          "val_accuracy": 0.6447,
+          "val_macro_f1": 0.644,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.1695,
+          "val_accuracy": 0.6466,
+          "val_macro_f1": 0.643,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.1088,
+          "val_accuracy": 0.6466,
+          "val_macro_f1": 0.6438,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0706,
+          "val_accuracy": 0.6441,
+          "val_macro_f1": 0.6448,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0486,
+          "val_accuracy": 0.6523,
+          "val_macro_f1": 0.6507,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0347,
+          "val_accuracy": 0.6541,
+          "val_macro_f1": 0.6536,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0265,
+          "val_accuracy": 0.6454,
+          "val_macro_f1": 0.6433,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn",
+      "view": "output",
+      "tag": "ablate_strip_all_cnn"
+    },
+    "lstm_strip_all": {
+      "accuracy": 0.5579,
+      "macro_f1": 0.5552,
+      "per_class": {
+        "bard": {
+          "precision": 0.5873,
+          "recall": 0.6468,
+          "f1": 0.6156,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.5889,
+          "recall": 0.4132,
+          "f1": 0.4856,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.5234,
+          "recall": 0.5942,
+          "f1": 0.5565,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.5432,
+          "recall": 0.5847,
+          "f1": 0.5632,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          249,
+          45,
+          46,
+          45
+        ],
+        [
+          84,
+          169,
+          78,
+          78
+        ],
+        [
+          37,
+          33,
+          224,
+          83
+        ],
+        [
+          54,
+          40,
+          80,
+          245
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.532,
+          "macro_f1": 0.5321,
+          "per_class": {
+            "bard": {
+              "precision": 0.6386,
+              "recall": 0.5521,
+              "f1": 0.5922,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5056,
+              "recall": 0.4369,
+              "f1": 0.4688,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.4862,
+              "recall": 0.5196,
+              "f1": 0.5024,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.52,
+              "recall": 0.619,
+              "f1": 0.5652,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              53,
+              20,
+              10,
+              13
+            ],
+            [
+              17,
+              45,
+              26,
+              15
+            ],
+            [
+              6,
+              11,
+              53,
+              32
+            ],
+            [
+              7,
+              13,
+              20,
+              65
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.5321,
+          "macro_f1": 0.5276,
+          "per_class": {
+            "bard": {
+              "precision": 0.5364,
+              "recall": 0.6705,
+              "f1": 0.596,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.5921,
+              "recall": 0.375,
+              "f1": 0.4592,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.4592,
+              "recall": 0.4891,
+              "f1": 0.4737,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.5474,
+              "recall": 0.6198,
+              "f1": 0.5814,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              59,
+              9,
+              10,
+              10
+            ],
+            [
+              23,
+              45,
+              23,
+              29
+            ],
+            [
+              12,
+              12,
+              45,
+              23
+            ],
+            [
+              16,
+              10,
+              20,
+              75
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.633,
+          "macro_f1": 0.6275,
+          "per_class": {
+            "bard": {
+              "precision": 0.6336,
+              "recall": 0.7477,
+              "f1": 0.686,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6579,
+              "recall": 0.5102,
+              "f1": 0.5747,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.6195,
+              "recall": 0.7778,
+              "f1": 0.6897,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6279,
+              "recall": 0.5047,
+              "f1": 0.5596,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              83,
+              11,
+              11,
+              6
+            ],
+            [
+              22,
+              50,
+              9,
+              17
+            ],
+            [
+              8,
+              3,
+              70,
+              9
+            ],
+            [
+              18,
+              12,
+              23,
+              54
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.5322,
+          "macro_f1": 0.5245,
+          "per_class": {
+            "bard": {
+              "precision": 0.54,
+              "recall": 0.6,
+              "f1": 0.5684,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6304,
+              "recall": 0.3295,
+              "f1": 0.4328,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.5185,
+              "recall": 0.6022,
+              "f1": 0.5572,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.4951,
+              "recall": 0.593,
+              "f1": 0.5397,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              54,
+              5,
+              15,
+              16
+            ],
+            [
+              22,
+              29,
+              20,
+              17
+            ],
+            [
+              11,
+              7,
+              56,
+              19
+            ],
+            [
+              13,
+              5,
+              17,
+              51
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 1.3678,
+          "val_accuracy": 0.3496,
+          "val_macro_f1": 0.303,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.2145,
+          "val_accuracy": 0.4248,
+          "val_macro_f1": 0.3999,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.048,
+          "val_accuracy": 0.4655,
+          "val_macro_f1": 0.4628,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.9341,
+          "val_accuracy": 0.515,
+          "val_macro_f1": 0.5129,
+          "selected": true
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7679,
+          "val_accuracy": 0.515,
+          "val_macro_f1": 0.5133,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6463,
+          "val_accuracy": 0.4812,
+          "val_macro_f1": 0.4754,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.563,
+          "val_accuracy": 0.5031,
+          "val_macro_f1": 0.5016,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "lstm",
+      "view": "output",
+      "tag": "ablate_strip_all_lstm"
+    }
+  },
+  "extras": {
+    "bilstm": {
+      "accuracy": 0.717,
+      "macro_f1": 0.7168,
+      "per_class": {
+        "bard": {
+          "precision": 0.7139,
+          "recall": 0.7844,
+          "f1": 0.7475,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7092,
+          "recall": 0.6797,
+          "f1": 0.6941,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6818,
+          "recall": 0.7162,
+          "f1": 0.6986,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.7652,
+          "recall": 0.6921,
+          "f1": 0.7268,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          302,
+          35,
+          19,
+          29
+        ],
+        [
+          54,
+          278,
+          48,
+          29
+        ],
+        [
+          26,
+          50,
+          270,
+          31
+        ],
+        [
+          41,
+          29,
+          59,
+          290
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.6921,
+          "macro_f1": 0.6939,
+          "per_class": {
+            "bard": {
+              "precision": 0.7473,
+              "recall": 0.7083,
+              "f1": 0.7273,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6832,
+              "recall": 0.6699,
+              "f1": 0.6765,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.6033,
+              "recall": 0.7157,
+              "f1": 0.6547,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.7634,
+              "recall": 0.6762,
+              "f1": 0.7172,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              68,
+              8,
+              10,
+              10
+            ],
+            [
+              10,
+              69,
+              19,
+              5
+            ],
+            [
+              8,
+              14,
+              73,
+              7
+            ],
+            [
+              5,
+              10,
+              19,
+              71
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.696,
+          "macro_f1": 0.6878,
+          "per_class": {
+            "bard": {
+              "precision": 0.6667,
+              "recall": 0.7955,
+              "f1": 0.7254,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6719,
+              "recall": 0.7167,
+              "f1": 0.6935,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.5949,
+              "recall": 0.5109,
+              "f1": 0.5497,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8257,
+              "recall": 0.7438,
+              "f1": 0.7826,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              70,
+              12,
+              4,
+              2
+            ],
+            [
+              14,
+              86,
+              15,
+              5
+            ],
+            [
+              10,
+              23,
+              47,
+              12
+            ],
+            [
+              11,
+              7,
+              13,
+              90
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.7857,
+          "macro_f1": 0.7829,
+          "per_class": {
+            "bard": {
+              "precision": 0.7442,
+              "recall": 0.8649,
+              "f1": 0.8,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.8571,
+              "recall": 0.6122,
+              "f1": 0.7143,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7941,
+              "recall": 0.9,
+              "f1": 0.8438,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.781,
+              "recall": 0.7664,
+              "f1": 0.7736,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              96,
+              3,
+              3,
+              9
+            ],
+            [
+              19,
+              60,
+              6,
+              13
+            ],
+            [
+              2,
+              6,
+              81,
+              1
+            ],
+            [
+              12,
+              1,
+              12,
+              82
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6919,
+          "macro_f1": 0.6881,
+          "per_class": {
+            "bard": {
+              "precision": 0.6939,
+              "recall": 0.7556,
+              "f1": 0.7234,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6774,
+              "recall": 0.7159,
+              "f1": 0.6961,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.734,
+              "recall": 0.7419,
+              "f1": 0.738,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.6528,
+              "recall": 0.5465,
+              "f1": 0.5949,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              68,
+              12,
+              2,
+              8
+            ],
+            [
+              11,
+              63,
+              8,
+              6
+            ],
+            [
+              6,
+              7,
+              69,
+              11
+            ],
+            [
+              13,
+              11,
+              15,
+              47
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.9912,
+          "val_accuracy": 0.6523,
+          "val_macro_f1": 0.6526,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.7338,
+          "val_accuracy": 0.703,
+          "val_macro_f1": 0.703,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.5909,
+          "val_accuracy": 0.6986,
+          "val_macro_f1": 0.6993,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.4515,
+          "val_accuracy": 0.7187,
+          "val_macro_f1": 0.7182,
+          "selected": true
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.3146,
+          "val_accuracy": 0.6892,
+          "val_macro_f1": 0.6891,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.1875,
+          "val_accuracy": 0.7024,
+          "val_macro_f1": 0.7029,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.102,
+          "val_accuracy": 0.7187,
+          "val_macro_f1": 0.7183,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "bilstm",
+      "view": "output",
+      "tag": "extra_bilstm"
+    },
+    "cnn_multi": {
+      "accuracy": 0.7667,
+      "macro_f1": 0.7671,
+      "per_class": {
+        "bard": {
+          "precision": 0.797,
+          "recall": 0.8364,
+          "f1": 0.8162,
+          "support": 385.0
+        },
+        "falcon-40b-instruct": {
+          "precision": 0.7772,
+          "recall": 0.7335,
+          "f1": 0.7547,
+          "support": 409.0
+        },
+        "gpt-4": {
+          "precision": 0.6712,
+          "recall": 0.7905,
+          "f1": 0.7259,
+          "support": 377.0
+        },
+        "llama-2-70b-chat": {
+          "precision": 0.8399,
+          "recall": 0.7136,
+          "f1": 0.7716,
+          "support": 419.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          322,
+          30,
+          19,
+          14
+        ],
+        [
+          31,
+          300,
+          54,
+          24
+        ],
+        [
+          28,
+          32,
+          298,
+          19
+        ],
+        [
+          23,
+          24,
+          73,
+          299
+        ]
+      ],
+      "labels": [
+        "bard",
+        "falcon-40b-instruct",
+        "gpt-4",
+        "llama-2-70b-chat"
+      ],
+      "by_domain": {
+        "code": {
+          "accuracy": 0.7562,
+          "macro_f1": 0.758,
+          "per_class": {
+            "bard": {
+              "precision": 0.7429,
+              "recall": 0.8125,
+              "f1": 0.7761,
+              "support": 96.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7872,
+              "recall": 0.7184,
+              "f1": 0.7513,
+              "support": 103.0
+            },
+            "gpt-4": {
+              "precision": 0.65,
+              "recall": 0.7647,
+              "f1": 0.7027,
+              "support": 102.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8851,
+              "recall": 0.7333,
+              "f1": 0.8021,
+              "support": 105.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              78,
+              11,
+              4,
+              3
+            ],
+            [
+              8,
+              74,
+              19,
+              2
+            ],
+            [
+              14,
+              5,
+              78,
+              5
+            ],
+            [
+              5,
+              4,
+              19,
+              77
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "qa": {
+          "accuracy": 0.7506,
+          "macro_f1": 0.7495,
+          "per_class": {
+            "bard": {
+              "precision": 0.7677,
+              "recall": 0.8636,
+              "f1": 0.8128,
+              "support": 88.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.7928,
+              "recall": 0.7333,
+              "f1": 0.7619,
+              "support": 120.0
+            },
+            "gpt-4": {
+              "precision": 0.6117,
+              "recall": 0.6848,
+              "f1": 0.6462,
+              "support": 92.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8241,
+              "recall": 0.7355,
+              "f1": 0.7773,
+              "support": 121.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              76,
+              6,
+              4,
+              2
+            ],
+            [
+              7,
+              88,
+              16,
+              9
+            ],
+            [
+              9,
+              12,
+              63,
+              8
+            ],
+            [
+              7,
+              5,
+              20,
+              89
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "reasoning": {
+          "accuracy": 0.8596,
+          "macro_f1": 0.8591,
+          "per_class": {
+            "bard": {
+              "precision": 0.9048,
+              "recall": 0.8559,
+              "f1": 0.8796,
+              "support": 111.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.907,
+              "recall": 0.7959,
+              "f1": 0.8478,
+              "support": 98.0
+            },
+            "gpt-4": {
+              "precision": 0.7981,
+              "recall": 0.9222,
+              "f1": 0.8557,
+              "support": 90.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8378,
+              "recall": 0.8692,
+              "f1": 0.8532,
+              "support": 107.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              95,
+              5,
+              6,
+              5
+            ],
+            [
+              5,
+              78,
+              6,
+              9
+            ],
+            [
+              2,
+              1,
+              83,
+              4
+            ],
+            [
+              3,
+              2,
+              9,
+              93
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        },
+        "writing": {
+          "accuracy": 0.6919,
+          "macro_f1": 0.6845,
+          "per_class": {
+            "bard": {
+              "precision": 0.7684,
+              "recall": 0.8111,
+              "f1": 0.7892,
+              "support": 90.0
+            },
+            "falcon-40b-instruct": {
+              "precision": 0.6316,
+              "recall": 0.6818,
+              "f1": 0.6557,
+              "support": 88.0
+            },
+            "gpt-4": {
+              "precision": 0.6325,
+              "recall": 0.7957,
+              "f1": 0.7048,
+              "support": 93.0
+            },
+            "llama-2-70b-chat": {
+              "precision": 0.8,
+              "recall": 0.4651,
+              "f1": 0.5882,
+              "support": 86.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              73,
+              8,
+              5,
+              4
+            ],
+            [
+              11,
+              60,
+              13,
+              4
+            ],
+            [
+              3,
+              14,
+              74,
+              2
+            ],
+            [
+              8,
+              13,
+              25,
+              40
+            ]
+          ],
+          "labels": [
+            "bard",
+            "falcon-40b-instruct",
+            "gpt-4",
+            "llama-2-70b-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.9801,
+          "val_accuracy": 0.7024,
+          "val_macro_f1": 0.7009,
+          "selected": false
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.5699,
+          "val_accuracy": 0.7381,
+          "val_macro_f1": 0.7371,
+          "selected": false
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.3608,
+          "val_accuracy": 0.7494,
+          "val_macro_f1": 0.7508,
+          "selected": false
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.1985,
+          "val_accuracy": 0.7437,
+          "val_macro_f1": 0.7438,
+          "selected": false
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.1001,
+          "val_accuracy": 0.7531,
+          "val_macro_f1": 0.755,
+          "selected": false
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.0503,
+          "val_accuracy": 0.755,
+          "val_macro_f1": 0.7556,
+          "selected": false
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.0293,
+          "val_accuracy": 0.7632,
+          "val_macro_f1": 0.7625,
+          "selected": false
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.0195,
+          "val_accuracy": 0.7688,
+          "val_macro_f1": 0.7684,
+          "selected": false
+        },
+        {
+          "epoch": 9,
+          "train_loss": 0.0138,
+          "val_accuracy": 0.7657,
+          "val_macro_f1": 0.766,
+          "selected": false
+        },
+        {
+          "epoch": 10,
+          "train_loss": 0.0105,
+          "val_accuracy": 0.7688,
+          "val_macro_f1": 0.7686,
+          "selected": false
+        },
+        {
+          "epoch": 11,
+          "train_loss": 0.0082,
+          "val_accuracy": 0.7713,
+          "val_macro_f1": 0.7711,
+          "selected": true
+        },
+        {
+          "epoch": 12,
+          "train_loss": 0.0066,
+          "val_accuracy": 0.7675,
+          "val_macro_f1": 0.7676,
+          "selected": false
+        }
+      ],
+      "vocab_size": 12000,
+      "n_train": 7482,
+      "n_val": 1596,
+      "n_test": 1590,
+      "arch": "cnn_multi",
+      "view": "output",
+      "tag": "extra_cnn_multi"
+    }
+  },
+  "rq2_plot_rows": [
+    {
+      "setting": "input",
+      "model": "CNN",
+      "score": 0.2311,
+      "accuracy": 0.2654
+    },
+    {
+      "setting": "input",
+      "model": "LSTM",
+      "score": 0.2531,
+      "accuracy": 0.2541
+    },
+    {
+      "setting": "input",
+      "model": "Naive Bayes",
+      "score": 0.231,
+      "accuracy": 0.2503
+    },
+    {
+      "setting": "input",
+      "model": "Logistic regression",
+      "score": 0.2552,
+      "accuracy": 0.2553
+    },
+    {
+      "setting": "output",
+      "model": "CNN",
+      "score": 0.7451,
+      "accuracy": 0.7447
+    },
+    {
+      "setting": "output",
+      "model": "LSTM",
+      "score": 0.5881,
+      "accuracy": 0.5899
+    },
+    {
+      "setting": "output",
+      "model": "Naive Bayes",
+      "score": 0.5601,
+      "accuracy": 0.5629
+    },
+    {
+      "setting": "output",
+      "model": "Logistic regression",
+      "score": 0.7319,
+      "accuracy": 0.7314
+    },
+    {
+      "setting": "both",
+      "model": "CNN",
+      "score": 0.7326,
+      "accuracy": 0.7333
+    },
+    {
+      "setting": "both",
+      "model": "LSTM",
+      "score": 0.5785,
+      "accuracy": 0.578
+    },
+    {
+      "setting": "both",
+      "model": "Naive Bayes",
+      "score": 0.465,
+      "accuracy": 0.4686
+    },
+    {
+      "setting": "both",
+      "model": "Logistic regression",
+      "score": 0.6486,
+      "accuracy": 0.6484
+    }
+  ],
+  "rq4_features": {
+    "mean": {
+      "n_words": {
+        "bard": 260.0889,
+        "falcon-40b-instruct": 117.7533,
+        "gpt-4": 230.069,
+        "llama-2-70b-chat": 268.8324
+      },
+      "avg_word_len": {
+        "bard": 4.6459,
+        "falcon-40b-instruct": 4.8792,
+        "gpt-4": 5.0954,
+        "llama-2-70b-chat": 4.9007
+      },
+      "ttr_200": {
+        "bard": 0.5102,
+        "falcon-40b-instruct": 0.7093,
+        "gpt-4": 0.6387,
+        "llama-2-70b-chat": 0.5625
+      },
+      "ttr_50": {
+        "bard": 0.7151,
+        "falcon-40b-instruct": 0.7612,
+        "gpt-4": 0.7695,
+        "llama-2-70b-chat": 0.7571
+      },
+      "punct_per_word": {
+        "bard": 0.1895,
+        "falcon-40b-instruct": 0.1699,
+        "gpt-4": 0.2313,
+        "llama-2-70b-chat": 0.2
+      },
+      "upper_ratio": {
+        "bard": 0.0344,
+        "falcon-40b-instruct": 0.0337,
+        "gpt-4": 0.0412,
+        "llama-2-70b-chat": 0.0333
+      },
+      "code_fences": {
+        "bard": 0.3236,
+        "falcon-40b-instruct": 0.1147,
+        "gpt-4": 0.5043,
+        "llama-2-70b-chat": 0.279
+      },
+      "headers": {
+        "bard": 0.2831,
+        "falcon-40b-instruct": 0.1114,
+        "gpt-4": 0.1942,
+        "llama-2-70b-chat": 0.1909
+      },
+      "bullets": {
+        "bard": 2.8519,
+        "falcon-40b-instruct": 1.0656,
+        "gpt-4": 3.0821,
+        "llama-2-70b-chat": 3.0004
+      },
+      "bold_markers": {
+        "bard": 2.3127,
+        "falcon-40b-instruct": 0.0739,
+        "gpt-4": 0.3007,
+        "llama-2-70b-chat": 0.0855
+      },
+      "markdown_hits": {
+        "bard": 5.7713,
+        "falcon-40b-instruct": 1.3656,
+        "gpt-4": 4.0814,
+        "llama-2-70b-chat": 3.5557
+      },
+      "newline_per_word": {
+        "bard": 0.0862,
+        "falcon-40b-instruct": 0.0452,
+        "gpt-4": 0.1017,
+        "llama-2-70b-chat": 0.0745
+      },
+      "exclaim": {
+        "bard": 0.2366,
+        "falcon-40b-instruct": 0.2452,
+        "gpt-4": 0.3757,
+        "llama-2-70b-chat": 0.8616
+      }
+    },
+    "median_selected": {
+      "n_words": {
+        "bard": 230.0,
+        "falcon-40b-instruct": 76.0,
+        "gpt-4": 202.0,
+        "llama-2-70b-chat": 231.0
+      },
+      "ttr_50": {
+        "bard": 0.72,
+        "falcon-40b-instruct": 0.78,
+        "gpt-4": 0.78,
+        "llama-2-70b-chat": 0.78
+      },
+      "markdown_hits": {
+        "bard": 1.0,
+        "falcon-40b-instruct": 0.0,
+        "gpt-4": 1.0,
+        "llama-2-70b-chat": 0.0
+      }
+    }
+  },
+  "ablation_plot_rows": [
+    {
+      "setting": "original",
+      "model": "CNN",
+      "score": 0.7451
+    },
+    {
+      "setting": "original",
+      "model": "LSTM",
+      "score": 0.5881
+    },
+    {
+      "setting": "strip_markdown",
+      "model": "CNN",
+      "score": 0.7407
+    },
+    {
+      "setting": "strip_markdown",
+      "model": "LSTM",
+      "score": 0.5961
+    },
+    {
+      "setting": "fixed_length",
+      "model": "CNN",
+      "score": 0.715
+    },
+    {
+      "setting": "fixed_length",
+      "model": "LSTM",
+      "score": 0.6017
+    },
+    {
+      "setting": "strip_punct",
+      "model": "CNN",
+      "score": 0.7236
+    },
+    {
+      "setting": "strip_punct",
+      "model": "LSTM",
+      "score": 0.5184
+    },
+    {
+      "setting": "strip_all",
+      "model": "CNN",
+      "score": 0.6798
+    },
+    {
+      "setting": "strip_all",
+      "model": "LSTM",
+      "score": 0.5552
+    }
+  ],
+  "headlines": {
+    "rq1": {
+      "cnn": {
+        "accuracy": 0.7447,
+        "macro_f1": 0.7451,
+        "per_class": {
+          "bard": {
+            "precision": 0.7405,
+            "recall": 0.8078,
+            "f1": 0.7727,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.8,
+            "recall": 0.6944,
+            "f1": 0.7435,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.6446,
+            "recall": 0.7745,
+            "f1": 0.7036,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.8204,
+            "recall": 0.7088,
+            "f1": 0.7606,
+            "support": 419.0
+          }
+        }
+      },
+      "lstm": {
+        "accuracy": 0.5899,
+        "macro_f1": 0.5881,
+        "per_class": {
+          "bard": {
+            "precision": 0.6383,
+            "recall": 0.7013,
+            "f1": 0.6683,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.611,
+            "recall": 0.599,
+            "f1": 0.6049,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.5397,
+            "recall": 0.6313,
+            "f1": 0.5819,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.5692,
+            "recall": 0.4415,
+            "f1": 0.4973,
+            "support": 419.0
+          }
+        }
+      }
+    },
+    "rq1_baselines": {
+      "nb": {
+        "accuracy": 0.5629,
+        "macro_f1": 0.5601,
+        "per_class": {
+          "bard": {
+            "precision": 0.5909,
+            "recall": 0.6753,
+            "f1": 0.6303,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.6882,
+            "recall": 0.4694,
+            "f1": 0.5581,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.5258,
+            "recall": 0.4589,
+            "f1": 0.4901,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.4982,
+            "recall": 0.6444,
+            "f1": 0.5619,
+            "support": 419.0
+          }
+        }
+      },
+      "lr": {
+        "accuracy": 0.7314,
+        "macro_f1": 0.7319,
+        "per_class": {
+          "bard": {
+            "precision": 0.7666,
+            "recall": 0.7506,
+            "f1": 0.7585,
+            "support": 385.0
+          },
+          "falcon-40b-instruct": {
+            "precision": 0.705,
+            "recall": 0.7188,
+            "f1": 0.7119,
+            "support": 409.0
+          },
+          "gpt-4": {
+            "precision": 0.7165,
+            "recall": 0.7374,
+            "f1": 0.7268,
+            "support": 377.0
+          },
+          "llama-2-70b-chat": {
+            "precision": 0.7402,
+            "recall": 0.7208,
+            "f1": 0.7304,
+            "support": 419.0
+          }
+        }
+      }
+    },
+    "rq1_extras": {
+      "bilstm": {
+        "accuracy": 0.717,
+        "macro_f1": 0.7168
+      },
+      "cnn_multi": {
+        "accuracy": 0.7667,
+        "macro_f1": 0.7671
+      }
+    },
+    "rq2_macro_f1": {
+      "cnn_input": 0.2311,
+      "cnn_output": 0.7451,
+      "cnn_both": 0.7326,
+      "lstm_input": 0.2531,
+      "lstm_output": 0.5881,
+      "lstm_both": 0.5785,
+      "nb_input": 0.231,
+      "nb_output": 0.5601,
+      "nb_both": 0.465,
+      "lr_input": 0.2552,
+      "lr_output": 0.7319,
+      "lr_both": 0.6486
+    },
+    "rq2_accuracy": {
+      "cnn_input": 0.2654,
+      "cnn_output": 0.7447,
+      "cnn_both": 0.7333,
+      "lstm_input": 0.2541,
+      "lstm_output": 0.5899,
+      "lstm_both": 0.578,
+      "nb_input": 0.2503,
+      "nb_output": 0.5629,
+      "nb_both": 0.4686,
+      "lr_input": 0.2553,
+      "lr_output": 0.7314,
+      "lr_both": 0.6484
+    },
+    "rq3_drops": {
+      "cnn_writing": {
+        "in_macro_f1": 0.7656,
+        "cross_macro_f1": 0.6231,
+        "drop": 0.1425,
+        "in_accuracy": 0.7656,
+        "cross_accuracy": 0.6246,
+        "cross_recall": {
+          "bard": 0.7222,
+          "falcon-40b-instruct": 0.6818,
+          "gpt-4": 0.5806,
+          "llama-2-70b-chat": 0.5116
+        },
+        "in_recall": {
+          "bard": 0.8305,
+          "falcon-40b-instruct": 0.6885,
+          "gpt-4": 0.7923,
+          "llama-2-70b-chat": 0.7598
+        },
+        "n_cross": 357,
+        "n_in": 1233
+      },
+      "lstm_writing": {
+        "in_macro_f1": 0.5768,
+        "cross_macro_f1": 0.5096,
+        "drop": 0.0672,
+        "in_accuracy": 0.5766,
+        "cross_accuracy": 0.5238,
+        "cross_recall": {
+          "bard": 0.7667,
+          "falcon-40b-instruct": 0.4773,
+          "gpt-4": 0.5376,
+          "llama-2-70b-chat": 0.3023
+        },
+        "in_recall": {
+          "bard": 0.6576,
+          "falcon-40b-instruct": 0.5607,
+          "gpt-4": 0.6127,
+          "llama-2-70b-chat": 0.4895
+        },
+        "n_cross": 357,
+        "n_in": 1233
+      },
+      "cnn_code": {
+        "in_macro_f1": 0.7309,
+        "cross_macro_f1": 0.6546,
+        "drop": 0.0763,
+        "in_accuracy": 0.7306,
+        "cross_accuracy": 0.6527,
+        "cross_recall": {
+          "bard": 0.6354,
+          "falcon-40b-instruct": 0.6408,
+          "gpt-4": 0.7451,
+          "llama-2-70b-chat": 0.5905
+        },
+        "in_recall": {
+          "bard": 0.7889,
+          "falcon-40b-instruct": 0.6797,
+          "gpt-4": 0.8291,
+          "llama-2-70b-chat": 0.6401
+        },
+        "n_cross": 406,
+        "n_in": 1184
+      },
+      "lstm_code": {
+        "in_macro_f1": 0.6019,
+        "cross_macro_f1": 0.4472,
+        "drop": 0.1547,
+        "in_accuracy": 0.5997,
+        "cross_accuracy": 0.4507,
+        "cross_recall": {
+          "bard": 0.3021,
+          "falcon-40b-instruct": 0.5728,
+          "gpt-4": 0.4804,
+          "llama-2-70b-chat": 0.4381
+        },
+        "in_recall": {
+          "bard": 0.6713,
+          "falcon-40b-instruct": 0.5523,
+          "gpt-4": 0.5855,
+          "llama-2-70b-chat": 0.5924
+        },
+        "n_cross": 406,
+        "n_in": 1184
+      }
+    }
+  }
+}
